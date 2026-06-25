@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audicien (Traineeship) Maarssen — Beter Horen</title>
+<meta name="description" content="Word audicien bij Beter Horen via ons betaald traineeship in Maarssen. Start op €2.650 bruto en groei door terwijl je leert.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #CE1430;
+  --red-hover: #b01028;
+  --dark: #1a1a1a;
+  --text: #2d2d2d;
+  --text-secondary: #6b6b6b;
+  --bg: #ffffff;
+  --bg-warm: #f8f6f3;
+  --bg-cool: #f5f5f7;
+  --border: #e5e5e5;
+  --border-light: #f0f0f0;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.1);
+  --shadow-xl: 0 16px 48px rgba(0,0,0,0.12);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --font-heading: 'Figtree', system-ui, sans-serif;
+  --font-body: 'Mulish', system-ui, sans-serif;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── Typography ── */
+h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading); line-height: 1.15; font-weight: 700; }
+h1 { font-size: clamp(2.4rem, 5vw, 4rem); letter-spacing: -0.03em; }
+h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); letter-spacing: -0.02em; }
+h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
+p { font-size: clamp(1rem, 1.1vw, 1.125rem); }
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+/* ── Layout ── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.container-wide { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+section { padding: 100px 0; }
+@media (max-width: 768px) { section { padding: 64px 0; } }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; border-radius: 100px;
+  font-family: var(--font-heading); font-weight: 600; font-size: 1rem;
+  cursor: pointer; border: none; transition: all var(--transition);
+  text-decoration: none; white-space: nowrap;
+}
+.btn-primary {
+  background: var(--red); color: #fff;
+  box-shadow: 0 2px 12px rgba(206,20,48,0.25);
+}
+.btn-primary:hover { background: var(--red-hover); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(206,20,48,0.35); }
+.btn-ghost {
+  background: transparent; color: var(--text);
+  border: 1.5px solid var(--border);
+}
+.btn-ghost:hover { border-color: var(--text); background: var(--bg-cool); }
+
+/* ── Nav ── */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(255,255,255,0.85); backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  transition: all var(--transition);
+}
+.nav-inner {
+  max-width: 1400px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+}
+.nav-logo img { height: 36px; width: auto; }
+.nav-right { display: flex; align-items: center; gap: 24px; }
+.nav-phone {
+  display: flex; align-items: center; gap: 8px;
+  font-weight: 600; font-size: 0.95rem; color: var(--text);
+}
+.nav-phone svg { width: 18px; height: 18px; color: var(--red); }
+.nav-cta {
+  padding: 10px 24px; font-size: 0.9rem;
+}
+@media (max-width: 768px) {
+  .nav-phone span { display: none; }
+  .nav-cta { padding: 8px 18px; font-size: 0.85rem; }
+}
+
+/* ── Hero ── */
+.hero {
+  padding-top: 120px; padding-bottom: 80px;
+  min-height: 90vh; display: flex; align-items: center;
+  background: var(--bg);
+}
+.hero-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+}
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px; background: var(--bg-warm); border-radius: 100px;
+  font-size: 0.85rem; font-weight: 600; color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+.hero-tag::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--red);
+}
+.hero h1 { margin-bottom: 20px; color: var(--dark); }
+.hero-subtitle {
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem); color: var(--text-secondary);
+  line-height: 1.7; margin-bottom: 32px; max-width: 520px;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 32px; }
+.hero-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.hero-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 14px; background: var(--bg-cool); border-radius: 100px;
+  font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+}
+.hero-chip svg { width: 14px; height: 14px; }
+.hero-salary {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 20px; background: linear-gradient(135deg, #fef3f3, #fff8f0);
+  border-radius: var(--radius-md); border: 1px solid #fde8e8;
+}
+.hero-salary-icon {
+  width: 36px; height: 36px; background: var(--red); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-size: 1.1rem;
+}
+.hero-salary-text { font-size: 0.95rem; }
+.hero-salary-text strong { font-family: var(--font-heading); color: var(--dark); font-size: 1.1rem; }
+.hero-image {
+  position: relative; border-radius: var(--radius-xl); overflow: hidden;
+  aspect-ratio: 4/5; max-height: 600px;
+}
+.hero-image img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.hero-image::after {
+  content: ''; position: absolute; inset: 0;
+  border-radius: var(--radius-xl);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06);
+  pointer-events: none;
+}
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .hero-image { max-height: 400px; aspect-ratio: 16/10; }
+  .hero { min-height: auto; padding-bottom: 60px; }
+}
+
+/* ── USPs Bento ── */
+.usps { background: var(--bg-warm); }
+.usps h2 { text-align: center; margin-bottom: 56px; }
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: auto;
+  gap: 16px;
+}
+.bento-card {
+  background: var(--bg); border-radius: var(--radius-lg); padding: 28px;
+  border: 1px solid var(--border-light);
+  transition: all var(--transition);
+  display: flex; flex-direction: column; gap: 12px;
+}
+.bento-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+.bento-card.span-2 { grid-column: span 2; }
+.bento-icon {
+  width: 44px; height: 44px; border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, #fef3f3, #fff0f2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; flex-shrink: 0;
+}
+.bento-card h3 { font-size: 1.05rem; color: var(--dark); line-height: 1.3; }
+.bento-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+@media (max-width: 900px) {
+  .bento-grid { grid-template-columns: repeat(2, 1fr); }
+  .bento-card.span-2 { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+  .bento-grid { grid-template-columns: 1fr; }
+  .bento-card.span-2 { grid-column: span 1; }
+}
+
+/* ── Video ── */
+.video-section { background: var(--bg); }
+.video-section h2 { text-align: center; margin-bottom: 48px; }
+.video-wrapper {
+  max-width: 900px; margin: 0 auto;
+  border-radius: var(--radius-xl); overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  aspect-ratio: 16/9;
+}
+.video-wrapper iframe {
+  width: 100%; height: 100%; border: none;
+}
+
+/* ── Timeline ── */
+.timeline-section { background: var(--bg-cool); }
+.timeline-section h2 { text-align: center; margin-bottom: 64px; }
+.timeline {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  position: relative; max-width: 1000px; margin: 0 auto;
+}
+.timeline::before {
+  content: ''; position: absolute;
+  top: 28px; left: 10%; right: 10%;
+  height: 2px; background: var(--border);
+}
+.timeline-step {
+  text-align: center; position: relative; padding: 0 16px;
+}
+.timeline-dot {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--bg); border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; position: relative; z-index: 1;
+  font-family: var(--font-heading); font-weight: 700; font-size: 1.1rem;
+  color: var(--text-secondary);
+  transition: all var(--transition);
+}
+.timeline-step.revealed .timeline-dot {
+  background: var(--red); border-color: var(--red); color: #fff;
+  box-shadow: 0 4px 16px rgba(206,20,48,0.25);
+}
+.timeline-step h3 { margin-bottom: 8px; color: var(--dark); }
+.timeline-step p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+@media (max-width: 768px) {
+  .timeline { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .timeline::before { display: none; }
+}
+@media (max-width: 500px) {
+  .timeline { grid-template-columns: 1fr; }
+}
+
+/* ── Form ── */
+.form-section { background: var(--bg-warm); }
+.form-section h2 { text-align: center; margin-bottom: 12px; }
+.form-section .form-subtitle {
+  text-align: center; color: var(--text-secondary);
+  margin-bottom: 48px; font-size: 1.05rem;
+}
+.form-card {
+  max-width: 640px; margin: 0 auto;
+  background: var(--bg); border-radius: var(--radius-xl);
+  padding: 48px; box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-light);
+}
+.form-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full-width { grid-column: 1 / -1; }
+.form-group label {
+  font-family: var(--font-heading); font-weight: 600;
+  font-size: 0.9rem; color: var(--dark);
+}
+.form-group label .req { color: var(--red); }
+.form-group input,
+.form-group textarea {
+  padding: 12px 16px; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border); background: var(--bg-cool);
+  font-family: var(--font-body); font-size: 0.95rem;
+  color: var(--text); transition: all var(--transition);
+  outline: none;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--red); background: #fff;
+  box-shadow: 0 0 0 3px rgba(206,20,48,0.08);
+}
+.form-group input.error,
+.form-group textarea.error { border-color: var(--red); }
+.form-group textarea { resize: vertical; min-height: 100px; }
+.form-group .error-msg {
+  font-size: 0.8rem; color: var(--red); display: none;
+}
+.form-group input.error ~ .error-msg,
+.form-group textarea.error ~ .error-msg { display: block; }
+
+.form-file-label {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 20px; border-radius: var(--radius-sm);
+  border: 1.5px dashed var(--border); cursor: pointer;
+  transition: all var(--transition); background: var(--bg-cool);
+}
+.form-file-label:hover { border-color: var(--red); background: #fff; }
+.form-file-label svg { width: 20px; height: 20px; color: var(--text-secondary); }
+.form-file-label span { font-size: 0.9rem; color: var(--text-secondary); }
+.form-file-input { display: none; }
+.form-file-name { font-size: 0.85rem; color: var(--red); margin-top: 4px; }
+
+.form-checkbox {
+  display: flex; align-items: flex-start; gap: 10px; margin-top: 8px;
+}
+.form-checkbox input[type="checkbox"] {
+  width: 18px; height: 18px; accent-color: var(--red); margin-top: 2px; flex-shrink: 0;
+}
+.form-checkbox label { font-size: 0.9rem; color: var(--text-secondary); cursor: pointer; }
+
+.form-submit {
+  width: 100%; margin-top: 24px; padding: 16px;
+  font-size: 1.05rem; justify-content: center;
+}
+.form-privacy {
+  text-align: center; font-size: 0.8rem; color: var(--text-secondary);
+  margin-top: 16px;
+}
+.form-privacy svg { width: 14px; height: 14px; vertical-align: -2px; margin-right: 4px; }
+
+@media (max-width: 600px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .form-card { padding: 28px 20px; }
+}
+
+/* Form success */
+.form-success {
+  display: none; text-align: center; padding: 40px 20px;
+}
+.form-success.active { display: block; }
+.form-success-icon {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; font-size: 2rem;
+}
+.form-success h3 { margin-bottom: 12px; color: var(--dark); font-size: 1.4rem; }
+.form-success p { color: var(--text-secondary); }
+
+/* ── Testimonials ── */
+.testimonials { background: var(--bg); overflow: hidden; }
+.testimonials h2 { text-align: center; margin-bottom: 48px; }
+.testimonials-track {
+  display: flex; gap: 24px; overflow-x: auto;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;
+  padding: 8px 24px 24px;
+  scrollbar-width: none;
+}
+.testimonials-track::-webkit-scrollbar { display: none; }
+.testimonial-card {
+  flex: 0 0 380px; scroll-snap-align: start;
+  background: var(--bg); border-radius: var(--radius-xl);
+  padding: 32px; border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+}
+.testimonial-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.testimonial-quote {
+  font-size: 1rem; line-height: 1.7; color: var(--text);
+  margin-bottom: 24px; font-style: italic;
+  position: relative; padding-left: 20px;
+  border-left: 3px solid var(--red);
+}
+.testimonial-author {
+  display: flex; align-items: center; gap: 14px;
+}
+.testimonial-avatar {
+  width: 52px; height: 52px; border-radius: 50%;
+  object-fit: cover; border: 2px solid var(--border-light);
+}
+.testimonial-name { font-family: var(--font-heading); font-weight: 700; font-size: 0.95rem; color: var(--dark); }
+.testimonial-role { font-size: 0.85rem; color: var(--text-secondary); }
+@media (max-width: 500px) {
+  .testimonial-card { flex: 0 0 calc(100vw - 48px); }
+}
+
+/* ── Gallery Grid ── */
+.gallery { background: var(--bg-cool); }
+.gallery h2 { text-align: center; margin-bottom: 48px; }
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  gap: 16px;
+}
+.gallery-item {
+  position: relative; border-radius: var(--radius-lg); overflow: hidden;
+  aspect-ratio: 4/3;
+}
+.gallery-item:first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+.gallery-item:hover img { transform: scale(1.05); }
+.gallery-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 16px 20px; background: linear-gradient(transparent, rgba(0,0,0,0.6));
+  color: #fff; font-size: 0.9rem; font-weight: 600;
+  font-family: var(--font-heading);
+}
+@media (max-width: 768px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .gallery-item:first-child { grid-column: span 2; aspect-ratio: 16/9; grid-row: span 1; }
+}
+
+/* ── Stats ── */
+.stats { background: var(--bg); }
+.stats-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px;
+  text-align: center; margin-bottom: 48px;
+}
+.stat-number {
+  font-family: var(--font-heading); font-weight: 900;
+  font-size: clamp(2.5rem, 5vw, 4rem); color: var(--dark);
+  line-height: 1; margin-bottom: 8px; letter-spacing: -0.03em;
+}
+.stat-number .stat-plus { color: var(--red); }
+.stat-label { font-size: 1rem; color: var(--text-secondary); font-weight: 500; }
+.stats-description {
+  max-width: 700px; margin: 0 auto; text-align: center;
+  font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary);
+}
+@media (max-width: 600px) {
+  .stats-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+
+/* ── Footer ── */
+.footer {
+  background: var(--dark); color: rgba(255,255,255,0.7); padding: 64px 0 32px;
+}
+.footer-top {
+  display: grid; grid-template-columns: 1fr auto auto; gap: 48px;
+  align-items: start; margin-bottom: 48px;
+}
+.footer-logo img { height: 32px; filter: brightness(0) invert(1); margin-bottom: 16px; }
+.footer-socials { display: flex; gap: 12px; }
+.footer-social {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition); color: rgba(255,255,255,0.7);
+}
+.footer-social:hover { background: var(--red); color: #fff; }
+.footer-social svg { width: 18px; height: 18px; }
+.footer-badge {
+  padding: 8px 16px; border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--radius-sm); font-size: 0.85rem; font-weight: 600; color: rgba(255,255,255,0.8);
+  display: flex; align-items: center; gap: 8px;
+}
+.footer-badge svg { width: 18px; height: 18px; color: var(--red); }
+.footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+.footer-links a {
+  font-size: 0.9rem; transition: color var(--transition);
+}
+.footer-links a:hover { color: #fff; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 24px; display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 16px;
+}
+.footer-copy { font-size: 0.85rem; }
+@media (max-width: 768px) {
+  .footer-top { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* ── Mobile sticky ── */
+.mobile-sticky {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0;
+  z-index: 999; padding: 12px 16px; background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-light);
+}
+.mobile-sticky .btn { width: 100%; justify-content: center; padding: 14px; font-size: 0.95rem; }
+@media (max-width: 768px) {
+  .mobile-sticky { display: block; }
+  body { padding-bottom: 72px; }
+}
+
+/* ── Scroll reveal ── */
+.reveal {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.revealed { opacity: 1; transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .reveal.revealed { opacity: 1; transform: none; }
+  .timeline-step .timeline-dot { transition: none; }
+  .bento-card, .testimonial-card, .gallery-item img { transition: none; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo"><img src="images/logo.svg" alt="Beter Horen" width="140" height="36"></a>
+    <div class="nav-right">
+      <a href="tel:0880063909" class="nav-phone">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        <span>088 006 3909</span>
+      </a>
+      <a href="#kennismaken" class="btn btn-primary nav-cta">Kennismaken?</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container-wide">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-tag">Traineeship &middot; Betaald werk-leertraject</div>
+        <h1>Audicien (Traineeship) Maarssen</h1>
+        <p class="hero-subtitle">Ga jij echt een verschil maken in de levens van mensen? Wil jij een fulltime salaris ontvangen tijdens je opleiding? Ga dan voor een werk-leertraject en word audicien bij Beter Horen!</p>
+        <div class="hero-actions">
+          <a href="#usps" class="btn btn-ghost">Lees verder</a>
+          <a href="#kennismaken" class="btn btn-primary">Solliciteren</a>
+        </div>
+        <div class="hero-chips">
+          <span class="hero-chip">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Maarssen
+          </span>
+          <span class="hero-chip">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Fulltime
+          </span>
+          <span class="hero-chip">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 12 3 12 0v-5"/></svg>
+            MBO niveau 4
+          </span>
+        </div>
+        <div class="hero-salary">
+          <div class="hero-salary-icon">&euro;</div>
+          <div class="hero-salary-text">
+            <strong>&euro;2.650</strong> oplopend tot <strong>&euro;3.100</strong> bij afstuderen
+          </div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="images/woman-sofa-ear.avif" alt="Vrouw met gehoorapparaat op de bank" width="600" height="750" loading="eager">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USPs -->
+<section class="usps" id="usps">
+  <div class="container-wide">
+    <h2 class="reveal">Wat werken en leren bij Beter Horen jou oplevert:</h2>
+    <div class="bento-grid">
+      <div class="bento-card span-2 reveal">
+        <div class="bento-icon">&euro;</div>
+        <h3>Direct salaris en een erkende opleiding</h3>
+        <p>Je start op &euro;2.650 en groeit naar &euro;3.150 na je diploma.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon">&hearts;</div>
+        <h3>Betekenisvol werk</h3>
+        <p>Je maakt dagelijks het verschil in iemands leven.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon">&check;</div>
+        <h3>Zekerheid en toekomstperspectief</h3>
+        <p>Vast contract na je diploma en volop kansen in de sector.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon">&oplus;</div>
+        <h3>Werken en leren gecombineerd</h3>
+        <p>Je doet direct praktijkervaring op en past je kennis meteen toe.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon">&equiv;</div>
+        <h3>Leren samen met andere leerlingen</h3>
+        <p>Je ontwikkelt je in een sterke leeromgeving met peers.</p>
+      </div>
+      <div class="bento-card span-2 reveal">
+        <div class="bento-icon">&uarr;</div>
+        <h3>Volop doorgroeimogelijkheden</h3>
+        <p>Je ontwikkelt je richting specialist of leidinggevende rol.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon">&starf;</div>
+        <h3>Persoonlijke ontwikkeling</h3>
+        <p>Je groeit in vakkennis en sterke klant- en adviesvaardigheden.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon">&crarr;</div>
+        <h3>Afwisselend werk</h3>
+        <p>Je combineert klantcontact, zorg en resultaatgericht advies.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon">&infin;</div>
+        <h3>Werken in een hecht team</h3>
+        <p>Je werkt samen in een betrokken en ondersteunend team.</p>
+      </div>
+      <div class="bento-card reveal">
+        <div class="bento-icon">&oplus;</div>
+        <h3>Onderdeel van Amplifon</h3>
+        <p>Je profiteert van een internationale organisatie met kennis en innovatie.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Video -->
+<section class="video-section">
+  <div class="container">
+    <h2 class="reveal">Ontdek hoe het is om bij Beter Horen te werken</h2>
+    <div class="video-wrapper reveal">
+      <iframe src="https://www.youtube-nocookie.com/embed/O2wCfdKa4fM?modestbranding=1&rel=0&showinfo=0&iv_load_policy=3" title="Werken bij Beter Horen" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section class="timeline-section">
+  <div class="container">
+    <h2 class="reveal">Dit kun je verwachten wanneer je je gegevens achterlaat</h2>
+    <div class="timeline reveal">
+      <div class="timeline-step">
+        <div class="timeline-dot">1</div>
+        <h3>Intake</h3>
+        <p>We bellen je om even kort kennis te maken.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot">2</div>
+        <h3>Gesprek</h3>
+        <p>Je wordt bij ons op kantoor uitgenodigd om jouw wensen en ambities te bespreken tijdens een kop koffie.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot">3</div>
+        <h3>Meeloopdag</h3>
+        <p>Nog steeds enthousiast? Loop dan een dag mee om te ervaren hoe het is om bij Beter Horen te werken.</p>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-dot">4</div>
+        <h3>Welkom bij Beter Horen</h3>
+        <p>Als er een match is, krijg je van ons een contract.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Form -->
+<section class="form-section" id="kennismaken">
+  <div class="container">
+    <h2 class="reveal">Klaar voor de volgende stap?</h2>
+    <p class="form-subtitle reveal">Laat je gegevens achter en we nemen binnen een werkdag contact op.</p>
+    <div class="form-card reveal">
+      <form id="kForm" novalidate>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="naam">Naam <span class="req">*</span></label>
+            <input type="text" id="naam" name="naam" required placeholder="Je volledige naam">
+            <span class="error-msg">Vul je naam in</span>
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail <span class="req">*</span></label>
+            <input type="email" id="email" name="email" required placeholder="naam@voorbeeld.nl">
+            <span class="error-msg">Vul een geldig e-mailadres in</span>
+          </div>
+          <div class="form-group">
+            <label for="tel">Telefoon <span class="req">*</span></label>
+            <input type="tel" id="tel" name="tel" required placeholder="06 12345678">
+            <span class="error-msg">Vul je telefoonnummer in</span>
+          </div>
+          <div class="form-group">
+            <label for="plaats">Plaats <span class="req">*</span></label>
+            <input type="text" id="plaats" name="plaats" required placeholder="Woonplaats">
+            <span class="error-msg">Vul je woonplaats in</span>
+          </div>
+          <div class="form-group full-width">
+            <label for="extra">Extra informatie</label>
+            <textarea id="extra" name="extra" placeholder="Vertel ons iets over jezelf of stel een vraag..."></textarea>
+          </div>
+          <div class="form-group full-width">
+            <label>CV uploaden</label>
+            <label class="form-file-label" for="cv">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              <span>Kies bestand of sleep het hierheen</span>
+            </label>
+            <input type="file" id="cv" name="cv" class="form-file-input" accept=".pdf,.doc,.docx">
+            <div class="form-file-name"></div>
+          </div>
+          <div class="form-group full-width">
+            <div class="form-checkbox">
+              <input type="checkbox" id="loondienst" name="loondienst">
+              <label for="loondienst">Ik wil graag in loondienst werken</label>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary form-submit">Verzenden</button>
+        <p class="form-privacy">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Je gegevens worden vertrouwelijk behandeld.
+        </p>
+      </form>
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">&#10003;</div>
+        <h3>Bedankt, we spreken je snel!</h3>
+        <p>We hebben je gegevens ontvangen en bellen je binnen een werkdag voor een korte kennismaking.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+  <div class="container-wide">
+    <h2 class="reveal">Wat onze collega's vertellen</h2>
+    <div class="testimonials-track">
+      <div class="testimonial-card">
+        <p class="testimonial-quote">Toen ik begon wist ik weinig van de hoorbranche. Dankzij de begeleiding voelde ik me vanaf dag een onderdeel van het team. Geen dag is hier hetzelfde.</p>
+        <div class="testimonial-author">
+          <img src="images/Caroline.jpeg" alt="Caroline" class="testimonial-avatar" width="52" height="52" loading="lazy">
+          <div>
+            <div class="testimonial-name">Caroline</div>
+            <div class="testimonial-role">Officemanager</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">Het mooiste is dat je echt iets betekent voor mensen. Een klant die zijn kleinkinderen weer verstaat — daar doe je het voor. Die waardering krijg je elke dag terug.</p>
+        <div class="testimonial-author">
+          <img src="images/Hans.jpeg" alt="Hans" class="testimonial-avatar" width="52" height="52" loading="lazy">
+          <div>
+            <div class="testimonial-name">Hans</div>
+            <div class="testimonial-role">Sales</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">Ik ben via het traineeship binnengekomen en heb mijn diploma volledig betaald gehaald. Nu help ik zelf nieuwe collega's op weg. De doorgroei is hier echt.</p>
+        <div class="testimonial-author">
+          <img src="images/Pieter.jpeg" alt="Pieter" class="testimonial-avatar" width="52" height="52" loading="lazy">
+          <div>
+            <div class="testimonial-name">Pieter</div>
+            <div class="testimonial-role">Audicien</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="gallery">
+  <div class="container-wide">
+    <h2 class="reveal">Een kijkje bij Beter Horen</h2>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item">
+        <img src="images/cq5dam.jpeg" alt="Persoonlijk advies in de winkel" loading="lazy">
+        <div class="gallery-caption">Persoonlijk advies in de winkel</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/20221213-Beter-Horen-binnen.jpg" alt="Samen sterker als team" loading="lazy">
+        <div class="gallery-caption">Samen sterker als team</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/device1.jpeg" alt="De nieuwste hoortechnologie" loading="lazy">
+        <div class="gallery-caption">De nieuwste hoortechnologie</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/Beter-Horen-Audiologist-full-view-store_SC5-643x400.avif" alt="Meer dan 200 winkels in Nederland" loading="lazy">
+        <div class="gallery-caption">Meer dan 200 winkels in Nederland</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid reveal">
+      <div class="stat">
+        <div class="stat-number"><span class="stat-plus">+</span><span class="stat-count" data-target="200">0</span></div>
+        <div class="stat-label">winkels</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number"><span class="stat-plus">+</span><span class="stat-count" data-target="10000">0</span></div>
+        <div class="stat-label">apparaten verkocht</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number"><span class="stat-plus">+</span><span class="stat-count" data-target="100">0</span></div>
+        <div class="stat-label">collega's</div>
+      </div>
+    </div>
+    <p class="stats-description reveal">Bij Beter Horen nemen we de tijd voor u en uw gehoor. Met persoonlijke aandacht en deskundig advies helpen we mensen om weer beter te horen in het dagelijks leven — al meer dan 116 jaar.</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container-wide">
+    <div class="footer-top">
+      <div>
+        <a href="#" class="footer-logo"><img src="images/logo.svg" alt="Beter Horen" width="140" height="32"></a>
+        <div class="footer-socials">
+          <a href="#" class="footer-social" aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="#" class="footer-social" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="#" class="footer-social" aria-label="YouTube">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a href="#" class="footer-social" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Erkend leerbedrijf
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Cookies</a>
+        <a href="#">Voorwaarden</a>
+        <a href="#">Werken bij Beter Horen</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; Beter Horen, 2026 &mdash; onderdeel van de Amplifon-groep</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile sticky CTA -->
+<div class="mobile-sticky">
+  <a href="#kennismaken" class="btn btn-primary">Solliciteer nu &mdash; start je traineeship</a>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ── Scroll Reveal ── */
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReduced) {
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function(el) { observer.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('revealed'); });
+  }
+
+  /* ── Timeline dot animation ── */
+  if (!prefersReduced) {
+    var steps = document.querySelectorAll('.timeline-step');
+    var stepObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          stepObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    steps.forEach(function(s) { stepObserver.observe(s); });
+  } else {
+    document.querySelectorAll('.timeline-step').forEach(function(s) { s.classList.add('revealed'); });
+  }
+
+  /* ── Stat counter animation ── */
+  var statCounts = document.querySelectorAll('.stat-count');
+  if (!prefersReduced && statCounts.length) {
+    var statObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          var target = parseInt(el.getAttribute('data-target'), 10);
+          var duration = 1500;
+          var start = performance.now();
+          function tick(now) {
+            var progress = Math.min((now - start) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            var current = Math.round(eased * target);
+            el.textContent = current >= 1000 ? current.toLocaleString('nl-NL') : current;
+            if (progress < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+          statObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    statCounts.forEach(function(el) { statObserver.observe(el); });
+  } else {
+    statCounts.forEach(function(el) {
+      var t = el.getAttribute('data-target');
+      el.textContent = parseInt(t,10) >= 1000 ? parseInt(t,10).toLocaleString('nl-NL') : t;
+    });
+  }
+
+  /* ── File upload label ── */
+  var fileInput = document.getElementById('cv');
+  var fileName = document.querySelector('.form-file-name');
+  if (fileInput && fileName) {
+    fileInput.addEventListener('change', function() {
+      fileName.textContent = this.files.length ? this.files[0].name : '';
+    });
+  }
+
+  /* ── Form validation ── */
+  var form = document.getElementById('kForm');
+  var success = document.getElementById('formSuccess');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var valid = true;
+      var required = form.querySelectorAll('[required]');
+      required.forEach(function(input) {
+        input.classList.remove('error');
+        if (!input.value.trim()) {
+          input.classList.add('error');
+          valid = false;
+        }
+        if (input.type === 'email' && input.value.trim()) {
+          var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRe.test(input.value.trim())) {
+            input.classList.add('error');
+            valid = false;
+          }
+        }
+      });
+      if (valid) {
+        form.style.display = 'none';
+        success.classList.add('active');
+        success.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'center' });
+      } else {
+        var firstError = form.querySelector('.error');
+        if (firstError) firstError.focus();
+      }
+    });
+    // Live validation reset
+    form.querySelectorAll('[required]').forEach(function(input) {
+      input.addEventListener('input', function() {
+        this.classList.remove('error');
+      });
+    });
+  }
+
+  /* ── Nav scroll effect ── */
+  var nav = document.querySelector('.nav');
+  var lastScroll = 0;
+  window.addEventListener('scroll', function() {
+    var st = window.scrollY;
+    if (st > 100) {
+      nav.style.boxShadow = '0 1px 8px rgba(0,0,0,0.06)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+    lastScroll = st;
+  }, { passive: true });
+
+})();
+</script>
+</body>
+</html>

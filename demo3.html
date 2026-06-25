@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audicien (Traineeship) Maarssen — Beter Horen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700;800;900&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --red:#CE1430;
+  --red-dark:#A8102A;
+  --charcoal:#2F2F33;
+  --dark:#1A1A1E;
+  --white:#FFFFFF;
+  --gray-50:#F8F8FA;
+  --gray-100:#F0F0F3;
+  --gray-200:#E2E2E6;
+  --gray-400:#9C9CA6;
+  --gray-600:#5C5C66;
+  --font-heading:'Figtree',sans-serif;
+  --font-body:'Mulish',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);color:var(--charcoal);line-height:1.6;overflow-x:hidden;background:var(--white)}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:var(--font-body)}
+
+/* ===== NAV ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;transition:all .4s ease}
+.nav.scrolled{background:var(--white);box-shadow:0 2px 20px rgba(0,0,0,.08);padding:.75rem 2rem}
+.nav__logo img{height:28px;transition:filter .3s}
+.nav:not(.scrolled) .nav__logo img{filter:brightness(0) invert(1)}
+.nav__right{display:flex;align-items:center;gap:1.5rem}
+.nav__phone{font-weight:600;font-size:.95rem;color:var(--white);transition:color .3s}
+.nav.scrolled .nav__phone{color:var(--charcoal)}
+.nav__phone svg{width:18px;height:18px;vertical-align:middle;margin-right:.35rem;fill:currentColor}
+.nav__cta{background:var(--red);color:var(--white);padding:.65rem 1.5rem;border-radius:50px;font-weight:700;font-size:.9rem;transition:all .3s}
+.nav__cta:hover{background:var(--red-dark);transform:translateY(-1px)}
+
+/* ===== HERO ===== */
+.hero{position:relative;height:100vh;min-height:700px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#111}
+.hero__poster{position:absolute;inset:0;z-index:0}
+.hero__poster img{width:100%;height:100%;object-fit:cover}
+.hero__video-bg{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;width:100%;height:100%}
+.hero__video-bg iframe{position:absolute;top:50%;left:50%;width:300%;height:300%;transform:translate(-50%,-50%);border:0}
+.hero__overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(0,0,0,.7) 0%,rgba(0,0,0,.5) 40%,rgba(0,0,0,.65) 100%)}
+.hero__content{position:relative;z-index:3;text-align:center;color:var(--white);max-width:900px;padding:0 1.5rem}
+.hero__tag{display:inline-block;font-family:var(--font-heading);font-size:.85rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:1.25rem;padding:.5rem 1.25rem;border:1px solid rgba(255,255,255,.3);border-radius:50px}
+.hero__title{font-family:var(--font-heading);font-size:clamp(2.5rem,6vw,5rem);font-weight:900;line-height:1.05;margin-bottom:1.5rem;letter-spacing:-.02em}
+.hero__subtitle{font-size:clamp(1rem,1.8vw,1.25rem);max-width:700px;margin:0 auto 2.5rem;line-height:1.7;color:rgba(255,255,255,.9)}
+.hero__ctas{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
+.btn-primary{background:var(--red);color:var(--white);padding:1rem 2.5rem;border-radius:50px;font-size:1.1rem;font-weight:700;font-family:var(--font-heading);transition:all .3s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-primary:hover{background:var(--red-dark);transform:translateY(-2px);box-shadow:0 8px 30px rgba(206,20,48,.4)}
+.btn-ghost{background:transparent;color:var(--white);padding:1rem 2rem;border-radius:50px;font-size:1rem;font-weight:600;border:2px solid rgba(255,255,255,.5);display:inline-flex;align-items:center;gap:.6rem;transition:all .3s}
+.btn-ghost:hover{border-color:var(--white);background:rgba(255,255,255,.1)}
+.btn-ghost svg{width:20px;height:20px}
+.hero__salary{position:absolute;right:2rem;top:50%;transform:translateY(-50%);z-index:4;background:var(--red);color:var(--white);padding:1rem 1.5rem;border-radius:16px;text-align:center;font-family:var(--font-heading);box-shadow:0 8px 30px rgba(206,20,48,.4)}
+.hero__salary-amount{font-size:1.5rem;font-weight:900;line-height:1.1}
+.hero__salary-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;opacity:.9;margin-top:.25rem}
+.hero__chips{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+.hero__chip{background:rgba(255,255,255,.12);backdrop-filter:blur(8px);color:var(--white);padding:.5rem 1.25rem;border-radius:50px;font-size:.85rem;font-weight:600}
+.hero__scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:4;color:rgba(255,255,255,.6);display:flex;flex-direction:column;align-items:center;gap:.5rem;font-size:.75rem;text-transform:uppercase;letter-spacing:.15em}
+.hero__scroll svg{width:24px;height:24px;animation:scrollBounce 2s infinite}
+@keyframes scrollBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+/* ===== USPs ZIGZAG ===== */
+.usps{padding:6rem 2rem;max-width:1100px;margin:0 auto}
+.usps__heading{text-align:center;margin-bottom:3.5rem}
+.usps__heading h2{font-family:var(--font-heading);font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:var(--charcoal);margin-bottom:.5rem}
+.usps__grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.usp-card{display:flex;gap:16px;padding:24px 28px;border-radius:18px;background:var(--gray-50);border:1px solid var(--gray-200);transition:transform .3s ease,box-shadow .3s ease}
+.usp-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.06)}
+.usp-card__icon{flex-shrink:0;width:44px;height:44px;border-radius:12px;background:var(--red);display:flex;align-items:center;justify-content:center;margin-top:2px}
+.usp-card__icon svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.usp-card__text h3{font-family:var(--font-heading);font-size:1.05rem;font-weight:700;color:var(--charcoal);margin-bottom:4px}
+.usp-card__text p{color:var(--gray-600);font-size:.9rem;line-height:1.55}
+
+/* ===== IMAGE STRIP ===== */
+.image-strip{display:grid;grid-template-columns:repeat(4,1fr);width:100%;overflow:hidden}
+.image-strip__item{position:relative;aspect-ratio:4/3;overflow:hidden}
+.image-strip__item img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.image-strip__item:hover img{transform:scale(1.05)}
+.image-strip__caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));color:var(--white);padding:1.5rem 1rem .75rem;font-size:.85rem;font-weight:600}
+
+/* ===== TESTIMONIALS ===== */
+.testimonials{padding:6rem 2rem;background:var(--gray-50)}
+.testimonials__inner{max-width:900px;margin:0 auto;position:relative;min-height:300px}
+.testimonial{position:absolute;inset:0;display:flex;align-items:center;gap:3rem;opacity:0;transition:opacity .6s ease;pointer-events:none}
+.testimonial.active{opacity:1;pointer-events:auto;position:relative}
+.testimonial__photo{flex-shrink:0;width:140px;height:140px;border-radius:50%;overflow:hidden;border:4px solid var(--white);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.testimonial__photo img{width:100%;height:100%;object-fit:cover}
+.testimonial__content{flex:1}
+.testimonial__quote-mark{font-family:Georgia,serif;font-size:5rem;color:var(--red);line-height:.8;margin-bottom:.5rem}
+.testimonial__text{font-size:1.2rem;font-style:italic;line-height:1.8;color:var(--charcoal);margin-bottom:1rem}
+.testimonial__author{font-family:var(--font-heading);font-weight:700;color:var(--charcoal)}
+.testimonial__role{color:var(--gray-600);font-size:.9rem}
+.testimonial__dots{display:flex;justify-content:center;gap:.5rem;margin-top:2rem}
+.testimonial__dot{width:10px;height:10px;border-radius:50%;background:var(--gray-200);border:none;transition:all .3s;cursor:pointer}
+.testimonial__dot.active{background:var(--red);transform:scale(1.2)}
+
+/* ===== FUNNEL + FORM ===== */
+.funnel{background:var(--charcoal);padding:5rem 2rem;color:var(--white)}
+.funnel__grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.funnel__left{position:sticky;top:6rem}
+.funnel__left h2{font-family:var(--font-heading);font-size:clamp(1.5rem,2.5vw,2rem);font-weight:800;margin-bottom:2.5rem;line-height:1.3}
+.timeline{display:flex;flex-direction:column;gap:0}
+.timeline__step{display:flex;gap:1.25rem;padding-bottom:2rem;position:relative}
+.timeline__marker{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.timeline__dot{width:18px;height:18px;border-radius:50%;background:var(--red);border:3px solid rgba(255,255,255,.2);flex-shrink:0;z-index:1}
+.timeline__line{width:2px;flex:1;background:rgba(255,255,255,.15);margin-top:.25rem}
+.timeline__step:last-child .timeline__line{display:none}
+.timeline__content h3{font-family:var(--font-heading);font-weight:700;font-size:1rem;margin-bottom:.25rem}
+.timeline__content p{color:rgba(255,255,255,.7);font-size:.9rem;line-height:1.6}
+
+/* Form Card */
+.form-card{background:var(--white);border-radius:20px;padding:2.5rem;color:var(--charcoal);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.form-card h3{font-family:var(--font-heading);font-size:1.4rem;font-weight:800;margin-bottom:.25rem}
+.form-card .form-sub{color:var(--gray-600);font-size:.9rem;margin-bottom:1.5rem}
+.form-group{margin-bottom:1.25rem}
+.form-group label{display:block;font-weight:600;font-size:.85rem;margin-bottom:.35rem;color:var(--charcoal)}
+.form-group input,.form-group textarea{width:100%;padding:.75rem 1rem;border:2px solid var(--gray-200);border-radius:12px;font-family:var(--font-body);font-size:.95rem;transition:border-color .3s;outline:none;background:var(--gray-50)}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--red);background:var(--white)}
+.form-group input.invalid,.form-group textarea.invalid{border-color:#e53e3e}
+.form-group textarea{resize:vertical;min-height:80px}
+.form-group .error-msg{color:#e53e3e;font-size:.78rem;margin-top:.25rem;display:none}
+.form-group .error-msg.show{display:block}
+.form-checkbox{display:flex;align-items:flex-start;gap:.5rem;margin-bottom:1.25rem}
+.form-checkbox input[type=checkbox]{width:18px;height:18px;accent-color:var(--red);margin-top:.15rem;flex-shrink:0}
+.form-checkbox label{font-size:.9rem;cursor:pointer;line-height:1.4}
+.form-file label{font-size:.85rem;font-weight:600;margin-bottom:.35rem;display:block}
+.form-file input[type=file]{font-size:.85rem}
+.form-submit{width:100%;padding:1rem;background:var(--red);color:var(--white);border-radius:50px;font-size:1.1rem;font-weight:700;font-family:var(--font-heading);transition:all .3s;margin-top:.5rem}
+.form-submit:hover{background:var(--red-dark);transform:translateY(-1px)}
+.form-note{text-align:center;font-size:.78rem;color:var(--gray-400);margin-top:.75rem}
+.form-success{display:none;text-align:center;padding:3rem 1rem}
+.form-success h3{font-family:var(--font-heading);font-size:1.6rem;font-weight:800;color:var(--charcoal);margin-bottom:.75rem}
+.form-success p{color:var(--gray-600);font-size:1rem;line-height:1.6}
+.form-success .checkmark{font-size:3rem;margin-bottom:1rem}
+
+/* ===== OVER BETER HOREN ===== */
+.about{background:var(--red);color:var(--white);padding:5rem 2rem;text-align:center}
+.about__inner{max-width:900px;margin:0 auto}
+.about__stats{display:flex;justify-content:center;gap:4rem;margin-bottom:2.5rem;flex-wrap:wrap}
+.about__stat{text-align:center}
+.about__stat-num{font-family:var(--font-heading);font-size:clamp(2rem,4vw,3rem);font-weight:900}
+.about__stat-label{font-size:.85rem;opacity:.9;margin-top:.25rem}
+.about__text{font-size:1.1rem;line-height:1.8;max-width:750px;margin:0 auto;opacity:.95}
+
+/* ===== FOOTER ===== */
+.footer{background:var(--dark);color:rgba(255,255,255,.7);padding:3rem 2rem 1.5rem}
+.footer__inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2rem}
+.footer__brand img{height:30px;filter:brightness(0) invert(1);margin-bottom:1rem}
+.footer__badge{display:inline-block;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:.4rem .8rem;font-size:.75rem;font-weight:600;color:rgba(255,255,255,.8)}
+.footer__socials{display:flex;gap:.75rem}
+.footer__socials a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;transition:background .3s}
+.footer__socials a:hover{background:var(--red)}
+.footer__socials svg{width:16px;height:16px;fill:var(--white)}
+.footer__links{display:flex;gap:1.5rem;font-size:.8rem}
+.footer__links a:hover{color:var(--white)}
+.footer__bottom{max-width:1100px;margin:2rem auto 0;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.1);text-align:center;font-size:.78rem;color:rgba(255,255,255,.4)}
+
+/* ===== MOBILE STICKY ===== */
+.mobile-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:999;background:var(--red);padding:.85rem 1.5rem;text-align:center}
+.mobile-cta a{color:var(--white);font-weight:700;font-family:var(--font-heading);font-size:1rem}
+
+/* ===== LIGHTBOX ===== */
+.lightbox{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.lightbox.open{opacity:1;pointer-events:auto}
+.lightbox__close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:var(--white);font-size:2rem;cursor:pointer;width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .3s}
+.lightbox__close:hover{background:rgba(255,255,255,.1)}
+.lightbox__video{width:90vw;max-width:960px;aspect-ratio:16/9;border-radius:12px;overflow:hidden}
+.lightbox__video iframe{width:100%;height:100%;border:0}
+
+/* ===== REVEAL ===== */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .hero__salary{position:relative;right:auto;top:auto;transform:none;display:inline-block;margin-bottom:1.5rem}
+  .hero__content{display:flex;flex-direction:column;align-items:center}
+  .usps__grid{grid-template-columns:1fr}
+  .image-strip{grid-template-columns:repeat(2,1fr)}
+  .testimonial{flex-direction:column;text-align:center;gap:1.5rem}
+  .testimonial__photo{width:100px;height:100px}
+  .funnel__grid{grid-template-columns:1fr}
+  .funnel__left{position:static}
+  .about__stats{gap:2rem}
+  .footer__inner{flex-direction:column;align-items:center;text-align:center}
+  .mobile-cta{display:block}
+  .nav__phone{display:none}
+}
+@media(max-width:550px){
+  .hero__title{font-size:2.2rem}
+  .image-strip{grid-template-columns:1fr 1fr}
+  .nav{padding:.75rem 1rem}
+  .hero__ctas{flex-direction:column;align-items:center}
+}
+
+/* ===== REDUCED MOTION ===== */
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .hero__scroll svg{animation:none}
+  .testimonial{transition:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav__logo"><img src="images/logo.svg" alt="Beter Horen"></a>
+  <div class="nav__right">
+    <a href="tel:0880063909" class="nav__phone">
+      <svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.58.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.25 1.01l-2.2 2.2z"/></svg>
+      088 006 3909
+    </a>
+    <a href="#kennismaken" class="nav__cta">Kennismaken?</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero__poster">
+    <img src="images/woman-sofa-ear.avif" alt="" loading="eager">
+  </div>
+  <div class="hero__video-bg" id="videoBg">
+    <iframe src="https://www.youtube.com/embed/O2wCfdKa4fM?autoplay=1&mute=1&loop=1&playlist=O2wCfdKa4fM&controls=0&showinfo=0&rel=0&modestbranding=1" allow="autoplay; encrypted-media" allowfullscreen title="Beter Horen video"></iframe>
+  </div>
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <span class="hero__tag">Traineeship &middot; Betaald werk-leertraject</span>
+    <h1 class="hero__title">Audicien (Traineeship) Maarssen</h1>
+    <p class="hero__subtitle">Ga jij echt een verschil maken in de levens van mensen? Wil jij een fulltime salaris ontvangen tijdens je opleiding? Ga dan voor een werk-leertraject en word audicien bij Beter Horen!</p>
+    <div class="hero__ctas">
+      <a href="#kennismaken" class="btn-primary">Solliciteren</a>
+      <button class="btn-ghost" id="openLightbox">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Bekijk de video
+      </button>
+    </div>
+    <div class="hero__chips">
+      <span class="hero__chip">Maarssen</span>
+      <span class="hero__chip">Fulltime</span>
+      <span class="hero__chip">MBO niveau 4</span>
+    </div>
+  </div>
+  <div class="hero__salary">
+    <div class="hero__salary-amount">&euro;2.650</div>
+    <div class="hero__salary-label">oplopend tot &euro;3.100</div>
+  </div>
+  <a href="#usps" class="hero__scroll">
+    <span>Scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </a>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox__close" id="closeLightbox">&times;</button>
+  <div class="lightbox__video">
+    <iframe id="lightboxIframe" src="" allow="autoplay; encrypted-media" allowfullscreen title="Beter Horen video"></iframe>
+  </div>
+</div>
+
+<!-- USPs -->
+<section class="usps" id="usps">
+  <div class="usps__heading reveal">
+    <h2>Wat werken en leren bij Beter Horen jou oplevert:</h2>
+  </div>
+  <div class="usps__grid">
+    <div class="usp-card reveal">
+      <div class="usp-card__icon"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="usp-card__text"><h3>Direct salaris én een erkende opleiding</h3><p>Je start op €2.650 en groeit naar €3.150 na je diploma.</p></div>
+    </div>
+    <div class="usp-card reveal">
+      <div class="usp-card__icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <div class="usp-card__text"><h3>Betekenisvol werk</h3><p>Je maakt dagelijks het verschil in iemands leven.</p></div>
+    </div>
+    <div class="usp-card reveal">
+      <div class="usp-card__icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="usp-card__text"><h3>Zekerheid en toekomstperspectief</h3><p>Vast contract na je diploma én volop kansen in de sector.</p></div>
+    </div>
+    <div class="usp-card reveal">
+      <div class="usp-card__icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+      <div class="usp-card__text"><h3>Werken en leren gecombineerd</h3><p>Je doet direct praktijkervaring op en past je kennis meteen toe.</p></div>
+    </div>
+    <div class="usp-card reveal">
+      <div class="usp-card__icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <div class="usp-card__text"><h3>Leren samen met andere leerlingen</h3><p>Je ontwikkelt je in een sterke leeromgeving met peers.</p></div>
+    </div>
+    <div class="usp-card reveal">
+      <div class="usp-card__icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+      <div class="usp-card__text"><h3>Volop doorgroeimogelijkheden</h3><p>Je ontwikkelt je richting specialist of leidinggevende rol.</p></div>
+    </div>
+    <div class="usp-card reveal">
+      <div class="usp-card__icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div>
+      <div class="usp-card__text"><h3>Persoonlijke ontwikkeling</h3><p>Je groeit in vakkennis en sterke klant- en adviesvaardigheden.</p></div>
+    </div>
+    <div class="usp-card reveal">
+      <div class="usp-card__icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg></div>
+      <div class="usp-card__text"><h3>Afwisselend werk</h3><p>Je combineert klantcontact, zorg en resultaatgericht advies.</p></div>
+    </div>
+    <div class="usp-card reveal">
+      <div class="usp-card__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+      <div class="usp-card__text"><h3>Werken in een hecht team</h3><p>Je werkt samen in een betrokken en ondersteunend team.</p></div>
+    </div>
+    <div class="usp-card reveal">
+      <div class="usp-card__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+      <div class="usp-card__text"><h3>Onderdeel van Amplifon</h3><p>Je profiteert van een internationale organisatie met kennis en innovatie.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FUNNEL + FORM -->
+<section class="funnel" id="kennismaken">
+  <div class="funnel__grid">
+    <div class="funnel__left reveal">
+      <h2>Dit kun je verwachten wanneer je je gegevens achterlaat</h2>
+      <div class="timeline">
+        <div class="timeline__step">
+          <div class="timeline__marker">
+            <div class="timeline__dot"></div>
+            <div class="timeline__line"></div>
+          </div>
+          <div class="timeline__content">
+            <h3>1. Intake</h3>
+            <p>We bellen je om even kort kennis te maken.</p>
+          </div>
+        </div>
+        <div class="timeline__step">
+          <div class="timeline__marker">
+            <div class="timeline__dot"></div>
+            <div class="timeline__line"></div>
+          </div>
+          <div class="timeline__content">
+            <h3>2. Gesprek</h3>
+            <p>Je wordt bij ons op kantoor uitgenodigd om jouw wensen en ambities te bespreken tijdens een kop koffie.</p>
+          </div>
+        </div>
+        <div class="timeline__step">
+          <div class="timeline__marker">
+            <div class="timeline__dot"></div>
+            <div class="timeline__line"></div>
+          </div>
+          <div class="timeline__content">
+            <h3>3. Meeloopdag</h3>
+            <p>Nog steeds enthousiast? Loop dan een dag mee om te ervaren hoe het is om bij Beter Horen te werken.</p>
+          </div>
+        </div>
+        <div class="timeline__step">
+          <div class="timeline__marker">
+            <div class="timeline__dot"></div>
+          </div>
+          <div class="timeline__content">
+            <h3>4. Welkom bij Beter Horen</h3>
+            <p>Als er een match is, krijg je van ons een contract.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="funnel__right reveal">
+      <div class="form-card">
+        <div id="formContainer">
+          <h3>Solliciteer direct</h3>
+          <p class="form-sub">Vul je gegevens in en wij nemen snel contact op.</p>
+          <form id="applicationForm" novalidate>
+            <div class="form-group">
+              <label for="naam">Naam *</label>
+              <input type="text" id="naam" name="naam" required placeholder="Volledige naam">
+              <div class="error-msg">Vul je naam in.</div>
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail *</label>
+              <input type="email" id="email" name="email" required placeholder="jouw@email.nl">
+              <div class="error-msg">Vul een geldig e-mailadres in.</div>
+            </div>
+            <div class="form-group">
+              <label for="tel">Telefoonnummer *</label>
+              <input type="tel" id="tel" name="tel" required placeholder="06 12345678">
+              <div class="error-msg">Vul je telefoonnummer in.</div>
+            </div>
+            <div class="form-group">
+              <label for="plaats">Woonplaats *</label>
+              <input type="text" id="plaats" name="plaats" required placeholder="Bijv. Maarssen">
+              <div class="error-msg">Vul je woonplaats in.</div>
+            </div>
+            <div class="form-group">
+              <label for="extra">Motivatie of opmerking</label>
+              <textarea id="extra" name="extra" placeholder="Vertel iets over jezelf..."></textarea>
+            </div>
+            <div class="form-group form-file">
+              <label for="cv">CV uploaden</label>
+              <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx">
+            </div>
+            <div class="form-checkbox">
+              <input type="checkbox" id="loondienst" name="loondienst">
+              <label for="loondienst">Ik wil graag in loondienst werken</label>
+            </div>
+            <button type="submit" class="form-submit">Verzenden</button>
+            <p class="form-note">Je gegevens worden vertrouwelijk behandeld.</p>
+          </form>
+        </div>
+        <div class="form-success" id="formSuccess">
+          <div class="checkmark">&#10003;</div>
+          <h3>Bedankt, we spreken je snel!</h3>
+          <p>We hebben je gegevens ontvangen en bellen je binnen &eacute;&eacute;n werkdag voor een korte kennismaking.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMAGE STRIP -->
+<section class="image-strip reveal">
+  <div class="image-strip__item">
+    <img src="images/cq5dam.jpeg" alt="Persoonlijk advies in de winkel" loading="lazy">
+    <div class="image-strip__caption">Persoonlijk advies in de winkel</div>
+  </div>
+  <div class="image-strip__item">
+    <img src="images/20221213-Beter-Horen-binnen.jpg" alt="Samen sterker als team" loading="lazy">
+    <div class="image-strip__caption">Samen sterker als team</div>
+  </div>
+  <div class="image-strip__item">
+    <img src="images/device1.jpeg" alt="De nieuwste hoortechnologie" loading="lazy">
+    <div class="image-strip__caption">De nieuwste hoortechnologie</div>
+  </div>
+  <div class="image-strip__item">
+    <img src="images/Beter-Horen-Audiologist-full-view-store_SC5-643x400.avif" alt="Meer dan 200 winkels in Nederland" loading="lazy">
+    <div class="image-strip__caption">Meer dan 200 winkels in Nederland</div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials__inner">
+    <div class="testimonial active" data-index="0">
+      <div class="testimonial__photo"><img src="images/Caroline.jpeg" alt="Caroline"></div>
+      <div class="testimonial__content">
+        <div class="testimonial__quote-mark">&ldquo;</div>
+        <p class="testimonial__text">Toen ik begon wist ik weinig van de hoorbranche. Dankzij de begeleiding voelde ik me vanaf dag &eacute;&eacute;n onderdeel van het team. Geen dag is hier hetzelfde.</p>
+        <div class="testimonial__author">Caroline</div>
+        <div class="testimonial__role">Officemanager</div>
+      </div>
+    </div>
+    <div class="testimonial" data-index="1">
+      <div class="testimonial__photo"><img src="images/Hans.jpeg" alt="Hans"></div>
+      <div class="testimonial__content">
+        <div class="testimonial__quote-mark">&ldquo;</div>
+        <p class="testimonial__text">Het mooiste is dat je echt iets betekent voor mensen. Een klant die zijn kleinkinderen weer verstaat &mdash; daar doe je het voor. Die waardering krijg je elke dag terug.</p>
+        <div class="testimonial__author">Hans</div>
+        <div class="testimonial__role">Sales</div>
+      </div>
+    </div>
+    <div class="testimonial" data-index="2">
+      <div class="testimonial__photo"><img src="images/Pieter.jpeg" alt="Pieter"></div>
+      <div class="testimonial__content">
+        <div class="testimonial__quote-mark">&ldquo;</div>
+        <p class="testimonial__text">Ik ben via het traineeship binnengekomen en heb mijn diploma volledig betaald gehaald. Nu help ik zelf nieuwe collega&rsquo;s op weg. De doorgroei is hier echt.</p>
+        <div class="testimonial__author">Pieter</div>
+        <div class="testimonial__role">Audicien</div>
+      </div>
+    </div>
+    <div class="testimonial__dots">
+      <button class="testimonial__dot active" data-dot="0" aria-label="Testimonial 1"></button>
+      <button class="testimonial__dot" data-dot="1" aria-label="Testimonial 2"></button>
+      <button class="testimonial__dot" data-dot="2" aria-label="Testimonial 3"></button>
+    </div>
+  </div>
+</section>
+
+
+<!-- OVER BETER HOREN -->
+<section class="about reveal">
+  <div class="about__inner">
+    <div class="about__stats">
+      <div class="about__stat">
+        <div class="about__stat-num">+200</div>
+        <div class="about__stat-label">winkels</div>
+      </div>
+      <div class="about__stat">
+        <div class="about__stat-num">+10.000</div>
+        <div class="about__stat-label">apparaten verkocht</div>
+      </div>
+      <div class="about__stat">
+        <div class="about__stat-num">+100</div>
+        <div class="about__stat-label">collega's</div>
+      </div>
+    </div>
+    <p class="about__text">Bij Beter Horen nemen we de tijd voor u en uw gehoor. Met persoonlijke aandacht en deskundig advies helpen we mensen om weer beter te horen in het dagelijks leven &mdash; al meer dan 116 jaar.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <a href="#"><img src="images/logo.svg" alt="Beter Horen"></a>
+      <div class="footer__badge">Erkend leerbedrijf</div>
+    </div>
+    <div class="footer__socials">
+      <a href="https://www.facebook.com/BeterHoren" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/beterhoren/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.5"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@BeterHoren" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43zM9.75 15.02V8.48l5.75 3.27-5.75 3.27z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/company/beterhoren/" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 6a2 2 0 110-4 2 2 0 010 4z"/></svg>
+      </a>
+    </div>
+    <div class="footer__links">
+      <a href="#">Privacyverklaring</a>
+      <a href="#">Cookiebeleid</a>
+      <a href="#">Sitemap</a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    &copy; Beter Horen, 2026 &mdash; onderdeel van de Amplifon-groep
+  </div>
+</footer>
+
+<!-- MOBILE STICKY -->
+<div class="mobile-cta">
+  <a href="#kennismaken">Solliciteer nu &mdash; start je traineeship</a>
+</div>
+
+<script>
+(function(){
+  /* NAV SCROLL */
+  const nav=document.getElementById('nav');
+  const onScroll=()=>{nav.classList.toggle('scrolled',window.scrollY>60)};
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+
+  /* LIGHTBOX */
+  const lightbox=document.getElementById('lightbox');
+  const iframe=document.getElementById('lightboxIframe');
+  const videoSrc='https://www.youtube-nocookie.com/embed/O2wCfdKa4fM?autoplay=1&rel=0&modestbranding=1';
+  document.getElementById('openLightbox').addEventListener('click',()=>{
+    iframe.src=videoSrc;
+    lightbox.classList.add('open');
+    document.body.style.overflow='hidden';
+  });
+  function closeLB(){
+    lightbox.classList.remove('open');
+    iframe.src='';
+    document.body.style.overflow='';
+  }
+  document.getElementById('closeLightbox').addEventListener('click',closeLB);
+  lightbox.addEventListener('click',(e)=>{if(e.target===lightbox)closeLB()});
+  document.addEventListener('keydown',(e)=>{if(e.key==='Escape')closeLB()});
+
+  /* TESTIMONIALS */
+  const testimonials=document.querySelectorAll('.testimonial');
+  const dots=document.querySelectorAll('.testimonial__dot');
+  let current=0;
+  let autoTimer;
+  function showTestimonial(i){
+    testimonials.forEach(t=>t.classList.remove('active'));
+    dots.forEach(d=>d.classList.remove('active'));
+    testimonials[i].classList.add('active');
+    dots[i].classList.add('active');
+    current=i;
+  }
+  function startAuto(){autoTimer=setInterval(()=>{showTestimonial((current+1)%testimonials.length)},5000)}
+  dots.forEach(d=>d.addEventListener('click',()=>{
+    clearInterval(autoTimer);
+    showTestimonial(parseInt(d.dataset.dot));
+    startAuto();
+  }));
+  startAuto();
+
+  /* SCROLL REVEAL */
+  if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    const obs=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})
+    },{threshold:0.08});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  }else{
+    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
+  }
+
+  /* FORM VALIDATION */
+  const form=document.getElementById('applicationForm');
+  const formContainer=document.getElementById('formContainer');
+  const formSuccess=document.getElementById('formSuccess');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    let valid=true;
+    const required=form.querySelectorAll('[required]');
+    required.forEach(input=>{
+      const err=input.parentElement.querySelector('.error-msg');
+      let isValid=true;
+      if(input.type==='email'){
+        isValid=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
+      }else{
+        isValid=input.value.trim()!=='';
+      }
+      input.classList.toggle('invalid',!isValid);
+      if(err)err.classList.toggle('show',!isValid);
+      if(!isValid)valid=false;
+    });
+    if(valid){
+      formContainer.style.display='none';
+      formSuccess.style.display='block';
+    }
+  });
+  /* Clear validation on input */
+  form.querySelectorAll('input,textarea').forEach(input=>{
+    input.addEventListener('input',()=>{
+      input.classList.remove('invalid');
+      const err=input.parentElement.querySelector('.error-msg');
+      if(err)err.classList.remove('show');
+    });
+  });
+})();
+</script>
+</body>
+</html>
