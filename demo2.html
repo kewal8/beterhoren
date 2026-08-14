@@ -932,7 +932,7 @@ section { padding: 100px 0; }
   var form = document.getElementById('kForm');
   var success = document.getElementById('formSuccess');
   if (form) {
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
       e.preventDefault();
       var valid = true;
       var required = form.querySelectorAll('[required]');
@@ -950,14 +950,76 @@ section { padding: 100px 0; }
           }
         }
       });
-      if (valid) {
-        form.style.display = 'none';
-        success.classList.add('active');
-        success.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'center' });
-      } else {
+      if (!valid) {
         var firstError = form.querySelector('.error');
         if (firstError) firstError.focus();
+        return;
       }
+
+      /*
+       * ── Hidden tracking fields (placeholder) ──
+       * In production, append these to the FormData before posting:
+       *
+       * var hidden = {
+       *   gclid:    new URLSearchParams(location.search).get('gclid')    || '',
+       *   gbraid:   new URLSearchParams(location.search).get('gbraid')   || '',
+       *   wbraid:   new URLSearchParams(location.search).get('wbraid')   || '',
+       *   fbclid:   new URLSearchParams(location.search).get('fbclid')   || '',
+       *   utm_source:   new URLSearchParams(location.search).get('utm_source')   || '',
+       *   utm_medium:   new URLSearchParams(location.search).get('utm_medium')   || '',
+       *   utm_campaign: new URLSearchParams(location.search).get('utm_campaign') || '',
+       *   utm_term:     new URLSearchParams(location.search).get('utm_term')     || '',
+       *   utm_content:  new URLSearchParams(location.search).get('utm_content')  || '',
+       *   referrer:     document.referrer || '',
+       *   consent:      'granted',   // read from your CMP
+       *   variant:      'demo2',
+       *   timestamp:    new Date().toISOString(),
+       * };
+       * Object.entries(hidden).forEach(function(pair) { data.append(pair[0], pair[1]); });
+       */
+
+      var submitBtn = form.querySelector('.form-submit');
+      var fileInput = document.getElementById('cv');
+      var hasFile = fileInput && fileInput.files && fileInput.files.length > 0;
+
+      if (hasFile) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Bezig met uploaden…';
+
+        /*
+         * ── CV upload (placeholder) ──
+         * In production, upload the file BEFORE redirecting:
+         *
+         * var file = fileInput.files[0];
+         * var res = await fetch('/api/upload-url', {
+         *   method: 'POST',
+         *   headers: { 'Content-Type': 'application/json' },
+         *   body: JSON.stringify({ filename: file.name, type: file.type }),
+         * }).then(function(r) { return r.json(); });
+         *
+         * var uploadData = new FormData();
+         * Object.entries(res.fields).forEach(function(pair) { uploadData.append(pair[0], pair[1]); });
+         * uploadData.append('file', file);
+         * await fetch(res.url, { method: 'POST', body: uploadData });
+         *
+         * The redirect MUST be awaited behind upload completion,
+         * NOT fired alongside it — otherwise navigation kills the request
+         * and the file is lost.
+         */
+
+        await new Promise(function(r) { setTimeout(r, 1500); });
+      } else {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Verzenden…';
+      }
+
+      /*
+       * ── Backend submission (placeholder) ──
+       * var data = new FormData(form);
+       * await fetch('/api/sollicitatie', { method: 'POST', body: data });
+       */
+
+      window.location.href = 'bedankt.html?v=demo2';
     });
     // Live validation reset
     form.querySelectorAll('[required]').forEach(function(input) {

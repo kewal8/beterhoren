@@ -592,7 +592,7 @@ button{cursor:pointer;border:none;font-family:var(--font-body)}
   const form=document.getElementById('applicationForm');
   const formContainer=document.getElementById('formContainer');
   const formSuccess=document.getElementById('formSuccess');
-  form.addEventListener('submit',function(e){
+  form.addEventListener('submit',async function(e){
     e.preventDefault();
     let valid=true;
     const required=form.querySelectorAll('[required]');
@@ -608,10 +608,76 @@ button{cursor:pointer;border:none;font-family:var(--font-body)}
       if(err)err.classList.toggle('show',!isValid);
       if(!isValid)valid=false;
     });
-    if(valid){
-      formContainer.style.display='none';
-      formSuccess.style.display='block';
+    if(!valid){
+      const firstErr=form.querySelector('.invalid');
+      if(firstErr)firstErr.focus();
+      return;
     }
+
+    /*
+     * ── Hidden tracking fields (placeholder) ──
+     * In production, append these to the FormData before posting:
+     *
+     * const hidden = {
+     *   gclid:    new URLSearchParams(location.search).get('gclid')    || '',
+     *   gbraid:   new URLSearchParams(location.search).get('gbraid')   || '',
+     *   wbraid:   new URLSearchParams(location.search).get('wbraid')   || '',
+     *   fbclid:   new URLSearchParams(location.search).get('fbclid')   || '',
+     *   utm_source:   new URLSearchParams(location.search).get('utm_source')   || '',
+     *   utm_medium:   new URLSearchParams(location.search).get('utm_medium')   || '',
+     *   utm_campaign: new URLSearchParams(location.search).get('utm_campaign') || '',
+     *   utm_term:     new URLSearchParams(location.search).get('utm_term')     || '',
+     *   utm_content:  new URLSearchParams(location.search).get('utm_content')  || '',
+     *   referrer:     document.referrer || '',
+     *   consent:      'granted',   // read from your CMP
+     *   variant:      'demo3',
+     *   timestamp:    new Date().toISOString(),
+     * };
+     * Object.entries(hidden).forEach(([k, v]) => data.append(k, v));
+     */
+
+    const submitBtn=form.querySelector('.form-submit');
+    const fileInput=document.getElementById('cv');
+    const hasFile=fileInput && fileInput.files && fileInput.files.length>0;
+
+    if(hasFile){
+      submitBtn.disabled=true;
+      submitBtn.textContent='Bezig met uploaden…';
+
+      /*
+       * ── CV upload (placeholder) ──
+       * In production, upload the file BEFORE redirecting:
+       *
+       * const file = fileInput.files[0];
+       * const { url, fields } = await fetch('/api/upload-url', {
+       *   method: 'POST',
+       *   headers: { 'Content-Type': 'application/json' },
+       *   body: JSON.stringify({ filename: file.name, type: file.type }),
+       * }).then(r => r.json());
+       *
+       * const uploadData = new FormData();
+       * Object.entries(fields).forEach(([k, v]) => uploadData.append(k, v));
+       * uploadData.append('file', file);
+       * await fetch(url, { method: 'POST', body: uploadData });
+       *
+       * The redirect MUST be awaited behind upload completion,
+       * NOT fired alongside it — otherwise navigation kills the request
+       * and the file is lost.
+       */
+
+      await new Promise(r=>setTimeout(r,1500));
+    }else{
+      submitBtn.disabled=true;
+      submitBtn.textContent='Verzenden…';
+    }
+
+    /*
+     * ── Backend submission (placeholder) ──
+     * const data = new FormData(form);
+     * await fetch('/api/sollicitatie', { method: 'POST', body: data });
+     */
+
+    window.location.href='bedankt.html?v=demo3';
   });
   /* Clear validation on input */
   form.querySelectorAll('input,textarea').forEach(input=>{

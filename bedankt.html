@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bedankt voor je sollicitatie — Beter Horen</title>
+<meta name="description" content="Bedankt! We hebben je gegevens ontvangen en nemen binnen één werkdag contact met je op.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=Mulish:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #CE1430;
+  --red-dark: #A50F26;
+  --ink: #2F2F33;
+  --text: #22222A;
+  --muted: #6B6B73;
+  --muted-light: #9A9AA2;
+  --paper: #FFFFFF;
+  --mist: #F5F5F6;
+  --line: #E6E6E9;
+  --font-heading: 'Figtree', system-ui, sans-serif;
+  --font-body: 'Mulish', system-ui, sans-serif;
+  --radius-card: 26px;
+  --radius-lg: 34px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 2px 10px rgba(20,20,30,0.06);
+  --shadow-md: 0 14px 38px rgba(30,20,30,0.1);
+  --shadow-lg: 0 30px 70px rgba(30,15,25,0.18);
+  --shadow-brand: 0 18px 40px rgba(206,20,48,0.28);
+  --ease: cubic-bezier(0.22,0.61,0.36,1);
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--paper);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+h1,h2,h3,h4 { font-family: var(--font-heading); line-height: 1.15; letter-spacing: -0.02em; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Nav ── */
+.nav {
+  position: sticky; top: 0; z-index: 60;
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 6px 24px rgba(20,20,30,0.07);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between; height: 74px;
+}
+.nav-logo img { height: 28px; width: auto; }
+.nav-right { display: flex; align-items: center; gap: 14px; }
+.nav-phone {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-weight: 700; color: var(--ink); font-size: 0.95rem;
+}
+.nav-phone svg { width: 16px; height: 16px; color: var(--red); }
+@media (max-width: 620px) {
+  .nav-phone { display: none; }
+  .nav-inner { height: 64px; }
+  .nav-logo img { height: 22px; }
+}
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.55em;
+  font-family: var(--font-body); font-weight: 800; font-size: 1rem;
+  padding: 0.92em 1.7em; border-radius: var(--radius-pill);
+  border: 2px solid transparent; cursor: pointer;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), background 0.2s, color 0.2s;
+  white-space: nowrap; text-align: center; text-decoration: none;
+}
+.btn:active { transform: translateY(1px) scale(0.99); }
+.btn-primary { background: var(--red); color: #fff; box-shadow: var(--shadow-brand); }
+.btn-primary:hover { background: var(--red-dark); transform: translateY(-2px); box-shadow: 0 22px 46px rgba(206,20,48,0.36); }
+.btn-ghost { background: transparent; color: var(--red); border-color: var(--red); }
+.btn-ghost:hover { background: var(--red); color: #fff; transform: translateY(-2px); }
+.btn-lg { font-size: 1.06rem; padding: 1.02em 2em; }
+.btn svg { width: 18px; height: 18px; }
+
+/* ── Main content ── */
+.bedankt-hero {
+  padding: 80px 0 60px;
+  text-align: center;
+}
+.bedankt-icon {
+  width: 96px; height: 96px; border-radius: 50%;
+  background: var(--red); margin: 0 auto 28px;
+  display: grid; place-items: center;
+  box-shadow: var(--shadow-brand);
+  animation: popIn 0.6s var(--ease);
+}
+.bedankt-icon svg { width: 48px; height: 48px; color: #fff; }
+.bedankt-hero h1 {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: var(--ink); margin-bottom: 14px;
+}
+.bedankt-hero .subtitle {
+  color: var(--muted); font-size: 1.1rem; max-width: 560px; margin: 0 auto 40px; line-height: 1.7;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ── Steps ── */
+.steps-section { padding: 0 0 80px; }
+.steps-card {
+  background: var(--mist); border-radius: var(--radius-lg);
+  padding: 44px 48px; max-width: 700px; margin: 0 auto;
+}
+.steps-card h2 {
+  font-size: 1.3rem; color: var(--ink); margin-bottom: 32px; text-align: center;
+}
+.steps { display: flex; flex-direction: column; gap: 0; }
+.step {
+  display: flex; gap: 18px; padding: 14px 0; position: relative;
+}
+.step:not(:last-child)::before {
+  content: ''; position: absolute;
+  left: 21px; top: 52px; bottom: -14px;
+  width: 2px; background: var(--line);
+}
+.step.reached:not(:last-child)::before {
+  background: linear-gradient(var(--red), var(--line));
+}
+.step-marker {
+  flex: none; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--paper); border: 2px solid var(--line);
+  display: grid; place-items: center; position: relative; z-index: 2;
+  font-family: var(--font-heading); font-weight: 700; font-size: 0.95rem; color: var(--muted);
+  transition: all 0.3s var(--ease);
+}
+.step.reached .step-marker {
+  background: var(--red); border-color: var(--red); color: #fff;
+  box-shadow: 0 4px 16px rgba(206,20,48,0.3);
+}
+.step-text h3 { font-size: 1.05rem; color: var(--ink); margin-bottom: 2px; }
+.step-text p { color: var(--muted); font-size: 0.92rem; }
+.step.reached .step-text h3 { color: var(--red); }
+
+@media (max-width: 600px) {
+  .steps-card { padding: 28px 24px; }
+}
+
+/* ── CTAs ── */
+.cta-section {
+  padding: 0 0 80px; text-align: center;
+}
+.cta-section .actions {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+}
+.cta-section .back-link {
+  display: block; margin-top: 20px;
+  color: var(--muted); font-size: 0.92rem; font-weight: 600;
+}
+.cta-section .back-link:hover { color: var(--red); }
+
+/* ── Footer ── */
+.foot {
+  background: var(--ink); color: rgba(255,255,255,0.7); padding: 60px 0 40px;
+}
+.foot-top {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 30px; flex-wrap: wrap;
+  padding-bottom: 34px; border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.foot-logo { display: flex; align-items: center; }
+.foot-logo img { height: 30px; width: auto; filter: brightness(0) invert(1); }
+.foot-mid {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 24px; flex-wrap: wrap; padding: 28px 0;
+}
+.socials { display: flex; gap: 12px; }
+.socials a {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(255,255,255,0.08); display: grid; place-items: center;
+  transition: 0.25s;
+}
+.socials a:hover { background: var(--red); transform: translateY(-3px); }
+.socials svg { width: 20px; height: 20px; color: #fff; }
+.badge-erkend {
+  display: flex; align-items: center; gap: 12px;
+  background: #fff; border-radius: 14px; padding: 10px 16px; color: var(--ink);
+}
+.badge-erkend .bico {
+  width: 40px; height: 40px; border-radius: 9px;
+  background: #F39200; display: grid; place-items: center; flex: none;
+}
+.badge-erkend .bico svg { width: 24px; height: 24px; color: #fff; }
+.badge-erkend .bt { font-size: 0.7rem; font-weight: 700; color: var(--muted); line-height: 1.25; }
+.badge-erkend .bt b { display: block; color: var(--ink); font-size: 0.86rem; font-family: var(--font-heading); font-weight: 800; }
+.foot-legal {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 20px; flex-wrap: wrap; padding-top: 24px;
+  font-size: 0.82rem; color: rgba(255,255,255,0.5);
+}
+.foot-legal nav { display: flex; gap: 18px; flex-wrap: wrap; }
+.foot-legal a:hover { color: #fff; }
+
+/* ── Debug line ── */
+.debug-info {
+  display: none;
+  text-align: center; font-size: 0.72rem; color: var(--muted-light);
+  padding: 8px; font-family: monospace;
+}
+.debug-info.visible { display: block; }
+</style>
+</head>
+<body data-variant="">
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="nav-logo" aria-label="Beter Horen">
+      <img src="images/logo.svg" alt="Beter Horen">
+    </a>
+    <div class="nav-right">
+      <a href="tel:0880063909" class="nav-phone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/>
+        </svg>
+        088 006 3909
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main>
+  <section class="bedankt-hero">
+    <div class="wrap">
+      <div class="bedankt-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 6 9 17l-5-5"/>
+        </svg>
+      </div>
+      <h1>Bedankt, we spreken je snel!</h1>
+      <p class="subtitle">We hebben je gegevens ontvangen en bellen je binnen &eacute;&eacute;n werkdag voor een korte kennismaking.</p>
+    </div>
+  </section>
+
+  <section class="steps-section">
+    <div class="wrap">
+      <div class="steps-card">
+        <h2>Wat er nu gaat gebeuren</h2>
+        <div class="steps">
+          <div class="step reached">
+            <div class="step-marker">1</div>
+            <div class="step-text">
+              <h3>Intake</h3>
+              <p>We bellen je om even kort kennis te maken.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker">2</div>
+            <div class="step-text">
+              <h3>Gesprek</h3>
+              <p>Je wordt bij ons op kantoor uitgenodigd om jouw wensen en ambities te bespreken tijdens een kop koffie.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker">3</div>
+            <div class="step-text">
+              <h3>Meeloopdag</h3>
+              <p>Nog steeds enthousiast? Loop dan een dag mee om te ervaren hoe het is om bij Beter Horen te werken.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-marker">4</div>
+            <div class="step-text">
+              <h3>Welkom bij Beter Horen</h3>
+              <p>Als er een match is, krijg je van ons een contract.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="wrap">
+      <div class="actions">
+        <a href="https://careers.amplifon.com/nl/sites/CX_1/jobs?location=Nederland&locationId=300000000228969&locationLevel=country&mode=location" target="_blank" rel="noopener" class="btn btn-primary btn-lg">
+          Bekijk alle vacatures
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+        </a>
+      </div>
+      <a href="/" class="back-link" id="backLink">&larr; Terug naar de landingspagina</a>
+    </div>
+  </section>
+</main>
+
+<!-- DEBUG -->
+<div class="debug-info" id="debugInfo"></div>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <a href="#" class="foot-logo" aria-label="Beter Horen">
+        <img src="images/logo.svg" alt="Beter Horen">
+      </a>
+    </div>
+    <div class="foot-mid">
+      <div class="socials">
+        <a href="https://www.facebook.com/beterhoren" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.4 2.9h-2.4v7A10 10 0 0 0 22 12Z"/></svg></a>
+        <a href="https://www.instagram.com/beterhorennl/" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://www.youtube.com/channel/UCDox7Vv0wbKd0xUSj2GidKQ" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7a2.5 2.5 0 0 0-1.8-1.8C19.3 5 12 5 12 5s-7.3 0-8.8.5A2.5 2.5 0 0 0 1.4 7.3C1 8.8 1 12 1 12s0 3.2.4 4.7a2.5 2.5 0 0 0 1.8 1.8C4.7 19 12 19 12 19s7.3 0 8.8-.5a2.5 2.5 0 0 0 1.8-1.8C23 15.2 23 12 23 12ZM9.8 15.2V8.8l6 3.2-6 3.2Z"/></svg></a>
+        <a href="https://careers.amplifon.com/nl" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0 0-5ZM3 9h4v12H3V9Zm6 0h3.8v1.6h.05c.53-1 1.83-2.05 3.76-2.05C20.6 8.55 22 10.4 22 13.6V21h-4v-6.4c0-1.53-.03-3.5-2.13-3.5-2.14 0-2.47 1.67-2.47 3.4V21H9V9Z"/></svg></a>
+      </div>
+      <div class="badge-erkend" title="Erkend leerbedrijf">
+        <div class="bico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div class="bt">Wij leiden vakmensen op<b>Erkend leerbedrijf</b></div>
+      </div>
+    </div>
+    <div class="foot-legal">
+      <span>&copy; Beter Horen, 2026 &mdash; onderdeel van de Amplifon-groep</span>
+      <nav>
+        <a href="https://www.beterhoren.nl/privacy-verklaring">Privacy</a>
+        <a href="https://www.beterhoren.nl/cookies">Cookies</a>
+        <a href="https://www.beterhoren.nl/algemene-voorwaarden">Voorwaarden</a>
+        <a href="https://www.beterhoren.nl/audicien-worden">Werken bij Beter Horen</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var variant = params.get('v') || 'demo1';
+
+  document.body.setAttribute('data-variant', variant);
+
+  var backMap = {
+    demo1: '/',
+    demo2: '/demo2.html',
+    demo3: '/demo3.html'
+  };
+  var backLink = document.getElementById('backLink');
+  if (backMap[variant]) {
+    backLink.href = backMap[variant];
+  }
+
+  var debug = document.getElementById('debugInfo');
+  debug.textContent = 'variant=' + variant + ' | referrer=' + (document.referrer || '(direct)');
+  // Toggle debug visibility: add ?debug=1 to the URL
+  if (params.get('debug') === '1') {
+    debug.classList.add('visible');
+  }
+})();
+</script>
+</body>
+</html>
