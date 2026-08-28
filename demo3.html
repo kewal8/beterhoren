@@ -133,7 +133,12 @@ button{cursor:pointer;border:none;font-family:var(--font-body)}
 .form-checkbox label{font-size:.9rem;cursor:pointer;line-height:1.4}
 .form-file label{font-size:.85rem;font-weight:600;margin-bottom:.35rem;display:block}
 .form-file input[type=file]{font-size:.85rem}
+/* Submit failure banner — keeps the applicant on the form */
+.submit-error{display:flex;align-items:flex-start;gap:.6rem;padding:.85rem 1rem;margin-bottom:.5rem;border:2px solid #e53e3e;border-radius:12px;background:#fff5f5;color:#c53030;font-size:.85rem;font-weight:600;line-height:1.5}
+.submit-error[hidden]{display:none}
+.submit-error svg{width:18px;height:18px;flex-shrink:0;margin-top:1px}
 .form-submit{width:100%;padding:1rem;background:var(--red);color:var(--white);border-radius:50px;font-size:1.1rem;font-weight:700;font-family:var(--font-heading);transition:all .3s;margin-top:.5rem}
+.form-submit:disabled{opacity:.7;cursor:default;transform:none}
 .form-submit:hover{background:var(--red-dark);transform:translateY(-1px)}
 .form-note{text-align:center;font-size:.78rem;color:var(--gray-400);margin-top:.75rem}
 .form-success{display:none;text-align:center;padding:3rem 1rem}
@@ -401,6 +406,10 @@ button{cursor:pointer;border:none;font-family:var(--font-body)}
               <input type="checkbox" id="loondienst" name="loondienst">
               <label for="loondienst">Ik wil graag in loondienst werken</label>
             </div>
+            <div class="submit-error" id="submitError" role="alert" aria-live="polite" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+              <span id="submitErrorText"></span>
+            </div>
             <button type="submit" class="form-submit">Verzenden</button>
             <p class="form-note">Je gegevens worden vertrouwelijk behandeld.</p>
           </form>
@@ -592,26 +601,40 @@ button{cursor:pointer;border:none;font-family:var(--font-body)}
   const form=document.getElementById('applicationForm');
   const formContainer=document.getElementById('formContainer');
   const formSuccess=document.getElementById('formSuccess');
-  form.addEventListener('submit',async function(e){
-    e.preventDefault();
-    let valid=true;
-    const required=form.querySelectorAll('[required]');
-    required.forEach(input=>{
-      const err=input.parentElement.querySelector('.error-msg');
-      let isValid=true;
-      if(input.type==='email'){
-        isValid=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
-      }else{
-        isValid=input.value.trim()!=='';
-      }
-      input.classList.toggle('invalid',!isValid);
-      if(err)err.classList.toggle('show',!isValid);
-      if(!isValid)valid=false;
-    });
-    if(!valid){
-      const firstErr=form.querySelector('.invalid');
-      if(firstErr)firstErr.focus();
-      return;
+
+  /* submit-error banner */
+  const submitError=document.getElementById('submitError');
+  const submitErrorText=document.getElementById('submitErrorText');
+  const GENERIC_ERROR='Er ging iets mis bij het verzenden. Controleer je internetverbinding en probeer het opnieuw.';
+  function showSubmitError(msg){
+    submitErrorText.textContent=msg||GENERIC_ERROR;
+    submitError.hidden=false;
+    submitError.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  function clearSubmitError(){
+    submitError.hidden=true;
+  }
+
+  /* max CV size — base64 inflates the payload by ~33% */
+  const MAX_CV_BYTES=5*1024*1024;
+
+  /*
+   * Sends the lead. Throws on any failure so the caller can keep the
+   * applicant on the form instead of redirecting them away — a silent
+   * redirect on error loses the lead entirely.
+   */
+  /* Marks an error whose message is safe to show the applicant. Anything
+     unmarked (network failures, HTTP statuses) falls back to the generic
+     Dutch copy rather than leaking "Failed to fetch" into the UI. */
+  function userError(msg){
+    const err=new Error(msg);
+    err.userFacing=true;
+    return err;
+  }
+
+  async function submitLead(file){
+    if(file && file.size>MAX_CV_BYTES){
+      throw userError('Je CV is te groot. Kies een bestand van maximaal 5 MB.');
     }
 
     /*
@@ -636,19 +659,11 @@ button{cursor:pointer;border:none;font-family:var(--font-body)}
      * Object.entries(hidden).forEach(([k, v]) => data.append(k, v));
      */
 
-    const submitBtn=form.querySelector('.form-submit');
-    const fileInput=document.getElementById('cv');
-    const hasFile=fileInput && fileInput.files && fileInput.files.length>0;
-
-    if(hasFile){
-      submitBtn.disabled=true;
-      submitBtn.textContent='Bezig met uploaden…';
-
+    if(file){
       /*
        * ── CV upload (placeholder) ──
        * In production, upload the file BEFORE redirecting:
        *
-       * const file = fileInput.files[0];
        * const { url, fields } = await fetch('/api/upload-url', {
        *   method: 'POST',
        *   headers: { 'Content-Type': 'application/json' },
@@ -658,7 +673,8 @@ button{cursor:pointer;border:none;font-family:var(--font-body)}
        * const uploadData = new FormData();
        * Object.entries(fields).forEach(([k, v]) => uploadData.append(k, v));
        * uploadData.append('file', file);
-       * await fetch(url, { method: 'POST', body: uploadData });
+       * const up = await fetch(url, { method: 'POST', body: uploadData });
+       * if (!up.ok) throw new Error('CV upload failed: ' + up.status);
        *
        * The redirect MUST be awaited behind upload completion,
        * NOT fired alongside it — otherwise navigation kills the request
@@ -666,16 +682,68 @@ button{cursor:pointer;border:none;font-family:var(--font-body)}
        */
 
       await new Promise(r=>setTimeout(r,1500));
-    }else{
-      submitBtn.disabled=true;
-      submitBtn.textContent='Verzenden…';
     }
 
     /*
      * ── Backend submission (placeholder) ──
      * const data = new FormData(form);
-     * await fetch('/api/sollicitatie', { method: 'POST', body: data });
+     * const res = await fetch('/api/sollicitatie', { method: 'POST', body: data });
+     * if (!res.ok) throw new Error('Submit failed: ' + res.status);
      */
+
+    await new Promise(r=>setTimeout(r,400));
+  }
+
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();
+    clearSubmitError();
+    let valid=true;
+    const required=form.querySelectorAll('[required]');
+    required.forEach(input=>{
+      const err=input.parentElement.querySelector('.error-msg');
+      let isValid=true;
+      if(input.type==='email'){
+        isValid=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
+      }else{
+        isValid=input.value.trim()!=='';
+      }
+      input.classList.toggle('invalid',!isValid);
+      if(err)err.classList.toggle('show',!isValid);
+      if(!isValid)valid=false;
+    });
+    if(!valid){
+      const firstErr=form.querySelector('.invalid');
+      if(firstErr)firstErr.focus();
+      return;
+    }
+
+    const submitBtn=form.querySelector('.form-submit');
+    const originalLabel=submitBtn.textContent.trim();
+    const fileInput=document.getElementById('cv');
+    const file=fileInput && fileInput.files && fileInput.files[0];
+
+    submitBtn.disabled=true;
+    submitBtn.textContent=file?'Bezig met uploaden…':'Verzenden…';
+
+    try{
+      await submitLead(file);
+    }catch(err){
+      /* Hold the applicant on the form: restore the button, show why,
+         and keep every field they filled in so they can retry. */
+      console.error(err);
+      submitBtn.disabled=false;
+      submitBtn.textContent=originalLabel;
+      showSubmitError(err && err.userFacing ? err.message : null);
+      return;
+    }
+
+    /* Belt-and-braces: some hosts rewrite bedankt.html -> /bedankt and
+       drop the query string, which would lose the variant. */
+    try{
+      sessionStorage.setItem('bh_variant','demo3');
+    }catch(storageErr){
+      /* storage blocked — the ?v= param still carries it */
+    }
 
     window.location.href='bedankt.html?v=demo3';
   });

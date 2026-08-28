@@ -319,7 +319,19 @@ a { color: inherit; text-decoration: none; }
 <script>
 (function() {
   var params = new URLSearchParams(window.location.search);
-  var variant = params.get('v') || 'demo1';
+
+  /* Prefer the ?v= param, but fall back to sessionStorage: a host that
+     rewrites bedankt.html -> /bedankt can drop the query string on the
+     301, and losing the variant would break conversion attribution. */
+  var stored = null;
+  try {
+    stored = sessionStorage.getItem('bh_variant');
+  } catch (e) {
+    /* private mode / blocked storage — param-only is fine */
+  }
+
+  var variant = params.get('v') || stored || 'demo1';
+  var source = params.get('v') ? 'query' : (stored ? 'session' : 'default');
 
   document.body.setAttribute('data-variant', variant);
 
@@ -334,7 +346,8 @@ a { color: inherit; text-decoration: none; }
   }
 
   var debug = document.getElementById('debugInfo');
-  debug.textContent = 'variant=' + variant + ' | referrer=' + (document.referrer || '(direct)');
+  debug.textContent = 'variant=' + variant + ' (via ' + source + ')'
+    + ' | referrer=' + (document.referrer || '(direct)');
   // Toggle debug visibility: add ?debug=1 to the URL
   if (params.get('debug') === '1') {
     debug.classList.add('visible');

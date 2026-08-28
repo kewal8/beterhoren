@@ -325,6 +325,18 @@ section { padding: 100px 0; }
 }
 .form-checkbox label { font-size: 0.9rem; color: var(--text-secondary); cursor: pointer; }
 
+/* Submit failure banner — keeps the applicant on the form */
+.submit-error {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-top: 24px; padding: 14px 16px;
+  border: 1.5px solid var(--red); border-radius: var(--radius-sm);
+  background: #fff5f6; color: var(--red);
+  font-size: 0.9rem; font-weight: 600; line-height: 1.5;
+}
+.submit-error[hidden] { display: none; }
+.submit-error svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
+.submit-error + .form-submit { margin-top: 16px; }
+
 .form-submit {
   width: 100%; margin-top: 24px; padding: 16px;
   font-size: 1.05rem; justify-content: center;
@@ -708,6 +720,10 @@ section { padding: 100px 0; }
             </div>
           </div>
         </div>
+        <div class="submit-error" id="submitError" role="alert" aria-live="polite" hidden>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          <span id="submitErrorText"></span>
+        </div>
         <button type="submit" class="btn btn-primary form-submit">Verzenden</button>
         <p class="form-privacy">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
@@ -931,9 +947,103 @@ section { padding: 100px 0; }
   /* ── Form validation ── */
   var form = document.getElementById('kForm');
   var success = document.getElementById('formSuccess');
+
+  /* submit-error banner */
+  var submitError = document.getElementById('submitError');
+  var submitErrorText = document.getElementById('submitErrorText');
+  var GENERIC_ERROR = 'Er ging iets mis bij het verzenden. Controleer je internetverbinding en probeer het opnieuw.';
+  function showSubmitError(msg) {
+    submitErrorText.textContent = msg || GENERIC_ERROR;
+    submitError.hidden = false;
+    submitError.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'center' });
+  }
+  function clearSubmitError() {
+    submitError.hidden = true;
+  }
+
+  /* max CV size — base64 inflates the payload by ~33% */
+  var MAX_CV_BYTES = 5 * 1024 * 1024;
+
+  /*
+   * Sends the lead. Throws on any failure so the caller can keep the
+   * applicant on the form instead of redirecting them away — a silent
+   * redirect on error loses the lead entirely.
+   */
+  /* Marks an error whose message is safe to show the applicant. Anything
+     unmarked (network failures, HTTP statuses) falls back to the generic
+     Dutch copy rather than leaking "Failed to fetch" into the UI. */
+  function userError(msg) {
+    var err = new Error(msg);
+    err.userFacing = true;
+    return err;
+  }
+
+  async function submitLead(file) {
+    if (file && file.size > MAX_CV_BYTES) {
+      throw userError('Je CV is te groot. Kies een bestand van maximaal 5 MB.');
+    }
+
+    /*
+     * ── Hidden tracking fields (placeholder) ──
+     * In production, append these to the FormData before posting:
+     *
+     * var hidden = {
+     *   gclid:    new URLSearchParams(location.search).get('gclid')    || '',
+     *   gbraid:   new URLSearchParams(location.search).get('gbraid')   || '',
+     *   wbraid:   new URLSearchParams(location.search).get('wbraid')   || '',
+     *   fbclid:   new URLSearchParams(location.search).get('fbclid')   || '',
+     *   utm_source:   new URLSearchParams(location.search).get('utm_source')   || '',
+     *   utm_medium:   new URLSearchParams(location.search).get('utm_medium')   || '',
+     *   utm_campaign: new URLSearchParams(location.search).get('utm_campaign') || '',
+     *   utm_term:     new URLSearchParams(location.search).get('utm_term')     || '',
+     *   utm_content:  new URLSearchParams(location.search).get('utm_content')  || '',
+     *   referrer:     document.referrer || '',
+     *   consent:      'granted',   // read from your CMP
+     *   variant:      'demo2',
+     *   timestamp:    new Date().toISOString(),
+     * };
+     * Object.entries(hidden).forEach(function(pair) { data.append(pair[0], pair[1]); });
+     */
+
+    if (file) {
+      /*
+       * ── CV upload (placeholder) ──
+       * In production, upload the file BEFORE redirecting:
+       *
+       * var meta = await fetch('/api/upload-url', {
+       *   method: 'POST',
+       *   headers: { 'Content-Type': 'application/json' },
+       *   body: JSON.stringify({ filename: file.name, type: file.type }),
+       * }).then(function(r) { return r.json(); });
+       *
+       * var uploadData = new FormData();
+       * Object.entries(meta.fields).forEach(function(pair) { uploadData.append(pair[0], pair[1]); });
+       * uploadData.append('file', file);
+       * var up = await fetch(meta.url, { method: 'POST', body: uploadData });
+       * if (!up.ok) throw new Error('CV upload failed: ' + up.status);
+       *
+       * The redirect MUST be awaited behind upload completion,
+       * NOT fired alongside it — otherwise navigation kills the request
+       * and the file is lost.
+       */
+
+      await new Promise(function(r) { setTimeout(r, 1500); });
+    }
+
+    /*
+     * ── Backend submission (placeholder) ──
+     * var data = new FormData(form);
+     * var res = await fetch('/api/sollicitatie', { method: 'POST', body: data });
+     * if (!res.ok) throw new Error('Submit failed: ' + res.status);
+     */
+
+    await new Promise(function(r) { setTimeout(r, 400); });
+  }
+
   if (form) {
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
+      clearSubmitError();
       var valid = true;
       var required = form.querySelectorAll('[required]');
       required.forEach(function(input) {
@@ -956,68 +1066,33 @@ section { padding: 100px 0; }
         return;
       }
 
-      /*
-       * ── Hidden tracking fields (placeholder) ──
-       * In production, append these to the FormData before posting:
-       *
-       * var hidden = {
-       *   gclid:    new URLSearchParams(location.search).get('gclid')    || '',
-       *   gbraid:   new URLSearchParams(location.search).get('gbraid')   || '',
-       *   wbraid:   new URLSearchParams(location.search).get('wbraid')   || '',
-       *   fbclid:   new URLSearchParams(location.search).get('fbclid')   || '',
-       *   utm_source:   new URLSearchParams(location.search).get('utm_source')   || '',
-       *   utm_medium:   new URLSearchParams(location.search).get('utm_medium')   || '',
-       *   utm_campaign: new URLSearchParams(location.search).get('utm_campaign') || '',
-       *   utm_term:     new URLSearchParams(location.search).get('utm_term')     || '',
-       *   utm_content:  new URLSearchParams(location.search).get('utm_content')  || '',
-       *   referrer:     document.referrer || '',
-       *   consent:      'granted',   // read from your CMP
-       *   variant:      'demo2',
-       *   timestamp:    new Date().toISOString(),
-       * };
-       * Object.entries(hidden).forEach(function(pair) { data.append(pair[0], pair[1]); });
-       */
-
       var submitBtn = form.querySelector('.form-submit');
+      var originalLabel = submitBtn.textContent.trim();
       var fileInput = document.getElementById('cv');
-      var hasFile = fileInput && fileInput.files && fileInput.files.length > 0;
+      var file = fileInput && fileInput.files && fileInput.files[0];
 
-      if (hasFile) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Bezig met uploaden…';
+      submitBtn.disabled = true;
+      submitBtn.textContent = file ? 'Bezig met uploaden…' : 'Verzenden…';
 
-        /*
-         * ── CV upload (placeholder) ──
-         * In production, upload the file BEFORE redirecting:
-         *
-         * var file = fileInput.files[0];
-         * var res = await fetch('/api/upload-url', {
-         *   method: 'POST',
-         *   headers: { 'Content-Type': 'application/json' },
-         *   body: JSON.stringify({ filename: file.name, type: file.type }),
-         * }).then(function(r) { return r.json(); });
-         *
-         * var uploadData = new FormData();
-         * Object.entries(res.fields).forEach(function(pair) { uploadData.append(pair[0], pair[1]); });
-         * uploadData.append('file', file);
-         * await fetch(res.url, { method: 'POST', body: uploadData });
-         *
-         * The redirect MUST be awaited behind upload completion,
-         * NOT fired alongside it — otherwise navigation kills the request
-         * and the file is lost.
-         */
-
-        await new Promise(function(r) { setTimeout(r, 1500); });
-      } else {
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Verzenden…';
+      try {
+        await submitLead(file);
+      } catch (err) {
+        /* Hold the applicant on the form: restore the button, show why,
+           and keep every field they filled in so they can retry. */
+        console.error(err);
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+        showSubmitError(err && err.userFacing ? err.message : null);
+        return;
       }
 
-      /*
-       * ── Backend submission (placeholder) ──
-       * var data = new FormData(form);
-       * await fetch('/api/sollicitatie', { method: 'POST', body: data });
-       */
+      /* Belt-and-braces: some hosts rewrite bedankt.html -> /bedankt and
+         drop the query string, which would lose the variant. */
+      try {
+        sessionStorage.setItem('bh_variant', 'demo2');
+      } catch (storageErr) {
+        /* storage blocked — the ?v= param still carries it */
+      }
 
       window.location.href = 'bedankt.html?v=demo2';
     });

@@ -741,6 +741,29 @@
       .field.invalid .err-msg {
         display: block;
       }
+      /* submit failure banner — keeps the applicant on the form */
+      .submit-error {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        background: #fff5f6;
+        border: 1.6px solid var(--brand);
+        border-radius: 14px;
+        padding: 0.85em 1em;
+        margin-bottom: 14px;
+        color: var(--brand-700);
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+      .submit-error[hidden] {
+        display: none;
+      }
+      .submit-error svg {
+        width: 18px;
+        height: 18px;
+        flex: none;
+        margin-top: 1px;
+      }
       /* success */
       .form-success {
         display: none;
@@ -1746,6 +1769,25 @@
                 ></span>
                 <span>Ik wil graag in loondienst werken</span>
               </label>
+              <div
+                class="submit-error"
+                id="submitError"
+                role="alert"
+                aria-live="polite"
+                hidden
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 8v4M12 16h.01" />
+                </svg>
+                <span id="submitErrorText"></span>
+              </div>
               <button type="submit" class="btn btn-primary btn-lg">
                 Verzenden
               </button>
@@ -2290,15 +2332,42 @@
             '<span class="fname">' + fileInput.files[0].name + "</span>";
         }
       });
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        let valid = true;
-        form.querySelectorAll("[required]").forEach((f) => {
-          if (!validateField(f)) valid = false;
-        });
-        if (!valid) {
-          form.querySelector(".invalid input,.invalid textarea")?.focus();
-          return;
+      /* submit-error banner */
+      const submitError = document.getElementById("submitError");
+      const submitErrorText = document.getElementById("submitErrorText");
+      const GENERIC_ERROR =
+        "Er ging iets mis bij het verzenden. Controleer je internetverbinding en probeer het opnieuw.";
+      function showSubmitError(msg) {
+        submitErrorText.textContent = msg || GENERIC_ERROR;
+        submitError.hidden = false;
+        submitError.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      function clearSubmitError() {
+        submitError.hidden = true;
+      }
+
+      /* max CV size — base64 inflates the payload by ~33% */
+      const MAX_CV_BYTES = 5 * 1024 * 1024;
+
+      /*
+       * Sends the lead. Throws on any failure so the caller can keep the
+       * applicant on the form instead of redirecting them away — a silent
+       * redirect on error loses the lead entirely.
+       */
+      /* Marks an error whose message is safe to show the applicant. Anything
+         unmarked (network failures, HTTP statuses) falls back to the generic
+         Dutch copy rather than leaking "Failed to fetch" into the UI. */
+      function userError(msg) {
+        const err = new Error(msg);
+        err.userFacing = true;
+        return err;
+      }
+
+      async function submitLead(file) {
+        if (file && file.size > MAX_CV_BYTES) {
+          throw userError(
+            "Je CV is te groot. Kies een bestand van maximaal 5 MB.",
+          );
         }
 
         /*
@@ -2323,19 +2392,11 @@
          * Object.entries(hidden).forEach(([k, v]) => data.append(k, v));
          */
 
-        const submitBtn = form.querySelector("button[type=submit]");
-        const originalLabel = submitBtn.textContent;
-        const hasFile = fileInput.files && fileInput.files.length > 0;
-
-        if (hasFile) {
-          submitBtn.disabled = true;
-          submitBtn.textContent = "Bezig met uploaden…";
-
+        if (file) {
           /*
            * ── CV upload (placeholder) ──
            * In production, upload the file BEFORE redirecting:
            *
-           * const file = fileInput.files[0];
            * const { url, fields } = await fetch('/api/upload-url', {
            *   method: 'POST',
            *   headers: { 'Content-Type': 'application/json' },
@@ -2345,7 +2406,8 @@
            * const uploadData = new FormData();
            * Object.entries(fields).forEach(([k, v]) => uploadData.append(k, v));
            * uploadData.append('file', file);
-           * await fetch(url, { method: 'POST', body: uploadData });
+           * const res = await fetch(url, { method: 'POST', body: uploadData });
+           * if (!res.ok) throw new Error('CV upload failed: ' + res.status);
            *
            * The redirect MUST be awaited behind upload completion,
            * NOT fired alongside it — otherwise navigation kills the request
@@ -2353,16 +2415,57 @@
            */
 
           await new Promise((r) => setTimeout(r, 1500));
-        } else {
-          submitBtn.disabled = true;
-          submitBtn.textContent = "Verzenden…";
         }
 
         /*
          * ── Backend submission (placeholder) ──
          * const data = new FormData(form);
-         * await fetch('/api/sollicitatie', { method: 'POST', body: data });
+         * const res = await fetch('/api/sollicitatie', { method: 'POST', body: data });
+         * if (!res.ok) throw new Error('Submit failed: ' + res.status);
          */
+
+        await new Promise((r) => setTimeout(r, 400));
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        clearSubmitError();
+
+        let valid = true;
+        form.querySelectorAll("[required]").forEach((f) => {
+          if (!validateField(f)) valid = false;
+        });
+        if (!valid) {
+          form.querySelector(".invalid input,.invalid textarea")?.focus();
+          return;
+        }
+
+        const submitBtn = form.querySelector("button[type=submit]");
+        const originalLabel = submitBtn.textContent.trim();
+        const file = fileInput.files && fileInput.files[0];
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = file ? "Bezig met uploaden…" : "Verzenden…";
+
+        try {
+          await submitLead(file);
+        } catch (err) {
+          /* Hold the applicant on the form: restore the button, show why,
+             and keep every field they filled in so they can retry. */
+          console.error(err);
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+          showSubmitError(err && err.userFacing ? err.message : null);
+          return;
+        }
+
+        /* Belt-and-braces: some hosts rewrite bedankt.html -> /bedankt and
+           drop the query string, which would lose the variant. */
+        try {
+          sessionStorage.setItem("bh_variant", "demo1");
+        } catch (err) {
+          /* storage blocked — the ?v= param still carries it */
+        }
 
         window.location.href = "bedankt.html?v=demo1";
       });
